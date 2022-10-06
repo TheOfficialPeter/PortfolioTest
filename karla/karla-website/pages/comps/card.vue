@@ -1,6 +1,10 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100&family=Fanwood+Text&family=Open+Sans&display=swap');
 
+body {
+-webkit-tap-highlight-color: transparent;
+}
+
 #card {
 position: absolute;
 left: 12px;
@@ -27,21 +31,14 @@ color: white;
 #card-edit {
 background-color: black;
 position: absolute;
+color: white;
+text-align: center;
+padding-top: 10px;
 right: 0;
 top: 0;
 width: 41px;
-height: 41px;
+height: 30px;
 transition: all .4s;
-}
-
-#card-edit:hover {
-transition: all .4s;
-box-shadow: 0 4px 20px rgba(0,0,0,.4);
-}
-
-#card:hover {
-transition: .2s;
-background-color: #aaaaaa;
 }
 </style>
 
@@ -51,6 +48,49 @@ export default {
 
 	}),
 	mounted() {
+		function openBlog() {
+			document.body.style.transition = "all .2s";
+
+			var card = document.getElementById('card');
+			var nav = document.getElementById('nav');
+			var menu = document.getElementById('left');
+			var menuImage = document.getElementById('menu-img');
+			var title = document.getElementById('right');
+			var desc = document.getElementById('desc');
+			
+			setTimeout(function() {
+				document.body.style.opacity = "0";
+			},100);
+
+			setTimeout(function() {
+				title.style.fontSize = "30px";
+				title.innerText = "How we got here";
+				desc.style.marginTop = "-20px";
+
+				var blog = document.createElement('div');
+				blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; left: 10%; right: 15%;";
+				blog.id = "blog";
+				blog.innerText = "blog text here";
+
+				document.body.appendChild(blog);
+				
+				card.style.display = "none";
+
+				document.body.style.opacity = "1";
+			},300);
+
+			setTimeout(function() {
+				menuImage.src = "../../Back.svg";
+			},300);
+		}
+
+		document.getElementById('card-edit').onclick = function(e) {
+			var edit = document.getElementById('card-edit');
+			edit.style.opacity = "0";
+			edit.style.cursor = "";
+			openBlog();
+		}
+
 		document.getElementById('card').onclick = function(e) {
 			var circle = document.createElement("div");
 			var circleX = (e.clientX-12);
@@ -71,7 +111,7 @@ export default {
 			},10)
 			setTimeout(function() {
 				circle.remove();
-			},400);
+			},300);
 		}
 	},
 	methods: {
@@ -83,7 +123,7 @@ export default {
 <template>
   <main>
 	<div id="card">
-		<div id="card-edit"></div>
+		<div id="card-edit"><img src="../../Edit.svg"/></div>
 		<div id="card-title">
 			1 How we got here
 		</div>
