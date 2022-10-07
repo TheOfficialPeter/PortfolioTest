@@ -77,7 +77,6 @@ export default {
 				var newCard = card.cloneNode(true);
 				newCard.style.display = "initial";
 				newCard.style.marginTop = (-73+(175+42)*i).toString() + "px";
-				console.log('added card');
 				document.body.appendChild(newCard);
 			}
 		}
@@ -88,13 +87,14 @@ export default {
 			for (let x = 0; x < cards.length; x++) {
 				cards[x].onclick = function(e) {
 					var circle = document.createElement("div");
-					var circleX = (e.clientX-12);
-					var circleY = (e.clientY-200);
+					console.log(e.clientX, e.clientY);
+					var circleX = (e.clientX);
+					var circleY = (e.clientY);
 					circle.style = "position: absolute; opacity: 1; background-color: white; z-index: 99; border-radius: 50%; transition: all .4s;";
 					circle.style.left = circleX.toString() + "px";
 					circle.style.top = circleY.toString() + "px";
 					circle.id = "circle";
-					cards[x].appendChild(circle);
+					document.body.appendChild(circle);
 
 					setTimeout(function() {
 						circle.style.padding = "100px";
