@@ -40,33 +40,37 @@ export default {
 
 	}),
 	mounted() {
+		var blogOpen = false;
+		
 		document.getElementById('left').onclick = function(e) {
-			var close = document.createElement("h1");
-			close.style = "opacity: 0; font-weight: 100; cursor: pointer; transition: all .2s; position: absolute; color: white; backgound-color: black; font-size: 50px; right: 50px; top: 10px; font-family: Open Sans";
-			close.innerText = "Close";
-			
-			var drawer = document.createElement("div");
-			drawer.style = "position: absolute; left: 0; top: 0; bottom: 0; background-color: black; transition: all 1s;";
-			drawer.id = "drawer";
- 
-			document.body.appendChild(drawer);
-			document.body.appendChild(close);
-			
-			setTimeout(function() {
-				close.style.opacity = "1";
-			},1000);			
-
-			setTimeout(function() {
-				drawer.style.paddingRight = "100vw";
-			},100);
-
-			close.onclick = function() {
-				close.style.opacity = "0";
+			if (document.getElementsByClassName('card')[0].style.display !== 'none') {
+				var close = document.createElement("h1");
+				close.style = "opacity: 0; font-weight: 100; cursor: pointer; transition: all .2s; position: absolute; color: white; backgound-color: black; font-size: 50px; right: 50px; top: 10px; font-family: Open Sans";
+				close.innerText = "Close";
+				
+				var drawer = document.createElement("div");
+				drawer.style = "position: absolute; left: 0; top: 0; bottom: 0; background-color: black; transition: all 1s;";
+				drawer.id = "drawer";
+	 
+				document.body.appendChild(drawer);
+				document.body.appendChild(close);
 				
 				setTimeout(function() {
-					close.innerHTML = "";
-					drawer.style.padding = "0";
-				},200);
+					close.style.opacity = "1";
+				},1000);			
+
+				setTimeout(function() {
+					drawer.style.paddingRight = "100vw";
+				},100);
+
+				close.onclick = function() {
+					close.style.opacity = "0";
+					
+					setTimeout(function() {
+						close.innerHTML = "";
+						drawer.style.padding = "0";
+					},200);
+				}
 			}
 		}
 	},
