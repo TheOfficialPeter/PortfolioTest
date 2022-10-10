@@ -15,6 +15,7 @@
 
 body {
 opacity: 0;
+margin: 0;
 transition: all .4s;
 overflow-x: hidden;
 -webkit-tap-highlight-color: transparent;
@@ -42,7 +43,7 @@ font-weight: 600;
 font-family: 'Catamaran';
 float: right;
 position: absolute;
-right: 34px;
+right: 5%;
 width: max-content;
 top: 20px;
 }
@@ -52,7 +53,7 @@ text-align: right;
 position: absolute;
 width: 203px;
 height: 16px;
-right: 34px;
+right: 5%;
 top: 86px;
 font-family: 'Open Sans';
 font-weight: 400;
@@ -63,15 +64,20 @@ color: rgba(0, 0, 0, 0.25);
 .card {
 display: none;
 position: absolute;
-left: 12px;
-border: 1px solid rgba(0, 0, 0, 0.05);
-right: 12px;
+right: 5%;
+left: 5%;
 height: 175px;
 text-align: center;
-background-color: #dddddd;
+background-color: #eeeeee;
 cursor: pointer;
 margin-top: 144px;
-transition: .2s;
+border: 1px solid rgba(0,0,0,0);
+transition: all .2s;
+}
+
+.card:hover {
+transition: all .5s;
+border: 1px solid rgba(0,0,0,.5);
 }
 
 #card-title {
