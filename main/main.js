@@ -112,6 +112,7 @@ document.getElementById('left').onclick = function(e) {
 	}
 }
 
+// initial card
 var card = document.getElementsByClassName('card')[0];
 
 function showLockPopup() {
@@ -130,8 +131,20 @@ function getDevice() {
 	nav.id = "navDrawer";
 	nav.style = "z-index: 99; position: absolute; left; 0; top: 0; bottom: 0; width: 462px; background-color: black;";
 
+	var title = document.getElementById('right');
+	var desc = document.getElementById('desc');
+
+	title.style.marginLeft = "462px";
+	title.style.left = "5%";
+
+	desc.style.marginLeft = "462px";
+	desc.style.left = "5%";
+	desc.style.textAlign = "left";
+
 	var navTitle = document.createElement("h1");
 	var navDesc = document.createElement("h1");
+	navTitle.id = "newDrawerTitle";
+	navDesc.id = "newDrawerDesc";
 
 	navTitle.style = "color: white; top: 22px; position: absolute; left: calc(50% - 462px/2); text-align: center; font-family: Catamaran; font-size: 50px; margin: 0; width: 462px; font-weight: 100;";
 	navDesc.style = "color: white; font-family: Fanwood Text; font-size: 20px; left: calc(50% - 462px/2); width: 462px; text-align: center; position: absolute; top: 75px; font-weight: 100;";
@@ -247,7 +260,8 @@ function addEvents() {
 				// ex: card-5 -> openBlog('5') 
 				
 				var device = "pc";
-				openBlog(cards[x].id.split("-")[1], device);
+				//openBlog(cards[x].id.split("-")[1], device);
+				openBlog(1, device);
 			},10)
 			setTimeout(function() {
 				circle.remove();
@@ -267,54 +281,104 @@ window.onload = function() {
 
 function openBlog(blogId, device) {
 	if (device == "pc") {
-		document.getElementById("navDrawer").style.opacity = "0";
-		document.getElementById("navDrawer").style.transition = "all .2s";
-		document.getElementById("navDrawer").remove();
-	}
+		var nav = document.getElementById('nav');
+		var menu = document.getElementById('left');
+		var menuImage = document.getElementById('menu-img');
+		var title = document.getElementById('right');
+		var desc = document.getElementById('desc');
+		var drawerTitle = document.getElementById("newDrawerTitle");
+		var drawerDesc = document.getElementById("newDrawerDesc");
 
-	blogId = parseInt(blogId);
-	var cards = document.getElementsByClassName('card');
-	var nav = document.getElementById('nav');
-	var menu = document.getElementById('left');
-	var menuImage = document.getElementById('menu-img');
-	var title = document.getElementById('right');
-	var desc = document.getElementById('desc');
+		drawerTitle.style.transition = "all .1s";
+		drawerDesc.style.transition = "all .1s";
 
-	setTimeout(function() {
-		document.body.style.opacity = "0";
-	},100);
+		cardCollection = document.getElementsByClassName("card");
 
-	setTimeout(function() {
-		title.style.fontSize = "30px";
+		for (let x = 0; x < cardCollection.length; x++) {
+			cardCollection[x].style.transition = "all .2s";
+			cardCollection[x].style.opacity = "0";
 
-		// This part should change with the cards info
-		title.innerText = "How we got here";
-		desc.innerText = "My story";
-		desc.style.marginTop = "-20px";
-		var blog = document.createElement('div');
-		blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; left: 10%; right: 15%;";
-		blog.id = "blog";
-		blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-		document.body.appendChild(blog);
-
-		for (let x = 0; x < cards.length; x++) {
-			cards[x].style.display = "none";
-		}
-
-		document.body.style.opacity = "1";
-	},500);
-	
-	setTimeout(function() {
-		menuImage.src = "./Back.svg";
-	},400)
-	
-	setTimeout(function() {
-
-		menuImage.onclick = function() {
-			document.body.style.opacity = "0";
 			setTimeout(function() {
-				location.reload();
-			},400)
+				cardCollection[x].style.display = "none";
+				cardCollection[x].remove();
+			},200);
 		}
-	},300);
+
+		setTimeout(function() {
+			var blog = document.createElement('div');
+			blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; margin-left: 462px; left: 5%; right: 5%;";
+			blog.id = "blog";
+			blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+			document.body.appendChild(blog);
+
+			title.style.paddingLeft = "5%";
+			desc.style.paddingLeft = "5%";
+			menuImage.style.marginLeft = "462px";
+			menuImage.src = "./Back.svg";
+
+			setTimeout(function() {
+				menuImage.onclick = function() {
+					menuImage.style.opacity = "0";
+					title.style.paddingLeft = "0";
+					desc.style.paddingLeft = "0";
+					blog.style.opacity = "0";
+					blog.innerText = "";
+					
+					setTimeout(function() {
+						menuImage.remove();
+						blog.remove();
+						showLoaded();
+					},200);
+				}
+			},200);
+		},200);
+	}
+	else
+	{
+		blogId = parseInt(blogId);
+		var cards = document.getElementsByClassName('card');
+		var nav = document.getElementById('nav');
+		var menu = document.getElementById('left');
+		var menuImage = document.getElementById('menu-img');
+		var title = document.getElementById('right');
+		var desc = document.getElementById('desc');
+
+		setTimeout(function() {
+			document.body.style.opacity = "0";
+		},100);
+
+		setTimeout(function() {
+			title.style.fontSize = "30px";
+
+			// This part should change with the cards info
+			title.innerText = "How we got here";
+			desc.innerText = "My story";
+			desc.style.marginTop = "-20px";
+			var blog = document.createElement('div');
+			blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; left: 10%; right: 15%;";
+			blog.id = "blog";
+			blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+			document.body.appendChild(blog);
+
+			for (let x = 0; x < cards.length; x++) {
+				cards[x].style.display = "none";
+			}
+
+			document.body.style.opacity = "1";
+		},500);
+		
+		setTimeout(function() {
+			menuImage.src = "./Back.svg";
+		},400)
+		
+		setTimeout(function() {
+
+			menuImage.onclick = function() {
+				document.body.style.opacity = "0";
+				setTimeout(function() {
+					location.reload();
+				},400)
+			}
+		},300);
+	}
 }

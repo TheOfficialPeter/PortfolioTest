@@ -40,6 +40,7 @@ font-family: 'Open Sans';
 
 #right {
 font-weight: 600;
+transition: all .2s;
 font-family: 'Catamaran';
 float: right;
 position: absolute;
@@ -50,6 +51,7 @@ top: 20px;
 
 #desc {
 text-align: right;
+transition: all .2s;
 position: absolute;
 width: 203px;
 height: 16px;
