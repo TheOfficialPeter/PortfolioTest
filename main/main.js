@@ -1,4 +1,6 @@
-const navList = ["Journal", "Education", "Contact"];
+var navList = ["Journal", "Education", "Contact"];
+var navList2 = [];
+const descList = ["yes", "yes", "yes"];
 
 function removeNavList() {
 	for (let i = 0; i < navList.length; i++) {
@@ -20,6 +22,15 @@ function makeNavListVisible() {
 	}
 }
 
+function makeNavListInvisible() {
+	for (let i = 0; i < navList.length; i++) {
+		var navItem = document.getElementById(navList[i]);
+		navItem.style.transition = "all .2s";
+		navItem.style.opacity = "0";
+	}
+}
+
+currentNavItem = "Journal";
 document.getElementById('left').onclick = function(e) {
 	if (document.getElementsByClassName('card')[0].style.display !== 'none') {
 		var close = document.createElement("h1");
@@ -30,21 +41,47 @@ document.getElementById('left').onclick = function(e) {
 		drawer.style = "position: absolute; left: 0; top: 0; bottom: 0; background-color: black; transition: all 1s;";
 		drawer.id = "drawer";
 
-		for (let x = 0; x < navList.length; x++) {
-			var navItem = document.createElement("h1");
-			navItem.style = "opacity: 0; cursor: pointer; position: absolute; padding-left: 20px; font-weight: 300; font-size: 50px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
-			
-			if (x == 0) {
-				navItem.style.color = "white";
+		navList2 = [];
+
+		(function () {
+			for (let x = 0; x < navList.length; x++) {
+				var navItem = document.createElement("h1");
+				navItem.style = "opacity: 0; cursor: pointer; position: absolute; padding-left: 20px; font-weight: 300; font-size: 50px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
+				navItem.style.top = "100px";
+				navItem.style.marginTop = (x*75).toString() + "px";
+				navItem.id = navList[x].toString();
+				navItem.innerText = navList[x];
+
+				if (navItem.id == currentNavItem) {
+					navItem.style.color = "white";
+				}
+
+				drawer.appendChild(navItem);
+				navList2.push(navItem);
 			}
 
-			navItem.style.top = "100px";
-			navItem.style.marginTop = (x*75).toString() + "px";
-			navItem.id = navList[x].toString();
-			navItem.innerText = navList[x];
+			for (let y = 0; y < navList2.length; y++) {
+				navList2[y].onclick = function() {
+					document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
 
-			drawer.appendChild(navItem);
-		}
+					navList2[y].style.color = "white";
+					currentNavItem = navList2[y].id;
+
+					document.getElementById('right').innerText = navList2[y].id;
+					document.getElementById('desc').innerText = descList[y];
+
+					drawer.style.paddingRight = "0";
+					removeNavList();
+					makeNavListInvisible();
+
+					drawer.style.paddingRight = "0";
+					
+					setTimeout(function() {
+						drawer.remove();
+					},1000)
+				}
+			}
+		})();
 
 		document.body.appendChild(drawer);
 		document.body.appendChild(close);
@@ -67,6 +104,7 @@ document.getElementById('left').onclick = function(e) {
 				drawer.style.padding = "0";
 				
 				setTimeout(function() {
+					close.remove();
 					drawer.remove();
 				},1000);
 			},200);
@@ -104,23 +142,56 @@ function getDevice() {
 	nav.appendChild(navTitle);
 	nav.appendChild(navDesc);
 
-	for (let x = 0; x < navList.length; x++) {
-		var navItem = document.createElement("h1");
-		navItem.style = "cursor: pointer; position: absolute; padding-left: 20px; font-weight: 300; font-size: 30px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
+	(function () {
+		for (let x = 0; x < navList.length; x++) {
+			var navItem = document.createElement("h1");
+			navItem.style = "cursor: pointer; position: absolute; padding-left: 20px; font-weight: 300; font-size: 30px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
+			navItem.style.transition = "all .2s";
 
-		if (x == 0) {
-			navItem.style.color = "white";
-			navItem.style.borderLeft = "4px solid white";
+			if (x == 0) {
+				navItem.style.color = "white";
+				navItem.style.borderLeft = "4px solid white";
+			}
+
+			navItem.style.top = "200px";
+			navItem.style.marginTop = (x*75).toString() + "px";
+			navItem.id = navList[x].toString();
+			navItem.innerText = navList[x];
+
+			nav.appendChild(navItem);
+
+			if (navItem.id == currentNavItem) {
+				navItem.style.color = "white";
+			}
+
+			navList2.push(navItem);
 		}
 
-		navItem.style.top = "200px";
-		navItem.style.marginTop = (x*75).toString() + "px";
-		navItem.id = navList[x].toString();
-		navItem.innerText = navList[x];
+		for (let y = 0; y < navList2.length; y++) {
+			navList2[y].onclick = function() {
+				document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
+				document.getElementById(currentNavItem).style.borderLeft = "";
 
-		nav.appendChild(navItem);
-	}
-	
+				navList2[y].style.color = "white";
+				navList2[y].style.borderLeft = "4px solid white";
+				currentNavItem = navList2[y].id;
+
+				document.getElementById('right').innerText = navList2[y].id;
+				document.getElementById('desc').innerText = descList[y];
+
+				drawer.style.paddingRight = "0";
+				removeNavList();
+				makeNavListInvisible();
+
+				drawer.style.paddingRight = "0";
+				
+				setTimeout(function() {
+					drawer.remove();
+				},1000)
+			}
+		}
+	})();
+
 	var cards = document.getElementsByClassName("card");
 	
 	for (let i = 0; i < cards.length; i++) {
@@ -160,7 +231,6 @@ function addEvents() {
 	for (let x = 0; x < cards.length; x++) {
 		cards[x].onclick = function(e) {
 			var circle = document.createElement("div");
-			console.log(e.clientX, e.clientY);
 			var circleX = (e.clientX);
 			var circleY = (e.clientY);
 			circle.style = "position: absolute; opacity: 1; background-color: white; z-index: 99; border-radius: 50%; transition: all .4s;";
@@ -174,7 +244,10 @@ function addEvents() {
 				circle.style.marginLeft = "-100px";
 				circle.style.marginTop = "-100px";
 				circle.style.opacity = "0";
-				openBlog();
+				// ex: card-5 -> openBlog('5') 
+				
+				var device = "pc";
+				openBlog(cards[x].id.split("-")[1], device);
 			},10)
 			setTimeout(function() {
 				circle.remove();
@@ -192,7 +265,14 @@ window.onload = function() {
 	document.body.style.opacity = "1";
 }
 
-function openBlog() {
+function openBlog(blogId, device) {
+	if (device == "pc") {
+		document.getElementById("navDrawer").style.opacity = "0";
+		document.getElementById("navDrawer").style.transition = "all .2s";
+		document.getElementById("navDrawer").remove();
+	}
+
+	blogId = parseInt(blogId);
 	var cards = document.getElementsByClassName('card');
 	var nav = document.getElementById('nav');
 	var menu = document.getElementById('left');
@@ -206,6 +286,8 @@ function openBlog() {
 
 	setTimeout(function() {
 		title.style.fontSize = "30px";
+
+		// This part should change with the cards info
 		title.innerText = "How we got here";
 		desc.innerText = "My story";
 		desc.style.marginTop = "-20px";
@@ -235,12 +317,4 @@ function openBlog() {
 			},400)
 		}
 	},300);
-}
-document.getElementById('card-edit').onclick = function(e) {
-	if (getAuth() == true) {
-		var edit = document.getElementById('card-edit');
-		edit.style.opacity = "0";
-		edit.style.cursor = "";
-		openBlog();
-	}
 }
