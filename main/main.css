@@ -29,6 +29,7 @@ font-size: 50px;
 }
 
 #left {
+z-index: 2;
 float: left;
 width: max-content;
 position: absolute;
@@ -70,16 +71,31 @@ right: 5%;
 left: 5%;
 height: 175px;
 text-align: center;
-background-color: #eeeeee;
 cursor: pointer;
 margin-top: 144px;
-border: 1px solid rgba(0,0,0,0);
 transition: all .2s;
 }
 
+#card-image {
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+z-index: 1;
+}
+
+#body {
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+}
+
 .card:hover {
-transition: all .5s;
-border: 1px solid rgba(0,0,0,.5);
+transform: scale(1.1);
+transition: all .2s;
 }
 
 #card-title {

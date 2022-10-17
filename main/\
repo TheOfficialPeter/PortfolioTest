@@ -201,18 +201,17 @@ function animateLoading() {
 }
 
 function showLoaded() {
-
-	var newBody = document.createElement("div");
-	newBody.id = "body";
-	document.body.appendChild(newBody);
-
 	for (let i = 1; i < 4; i++) {
 		var newCard = document.createElement("div");
 		newCard.className = "card";
 
 		var newCardImage = document.createElement("div");
 		newCardImage.id = "card-image";
-		newCardImage.style.backgroundImage = "url(https://images.unsplash.com/photo-1500259783852-0ca9ce8a64dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80)";
+		newCardImage.style = "z-index: 1; position: absolute; left: 0; top: 0; bottom: 0; right: 0; background-image: url(https://images.unsplash.com/photo-1500259783852-0ca9ce8a64dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80);";
+
+		newCardImage.onmouseenter = function() {
+			newCardImage.remove();
+		}
 
 		var newCardTitle = document.createElement("div");
 		newCardTitle.id = "card-title";
@@ -223,8 +222,7 @@ function showLoaded() {
 		newCard.style.marginTop = (-73+(175+42)*i).toString() + "px";
 		newCard.style.backgroundSize = "100%";
 		newCard.style.opacity = "1";
-		
-		newBody.appendChild(newCard);
+		document.body.appendChild(newCard);
 		newCard.appendChild(newCardTitle);
 		newCard.appendChild(newCardImage);
 	}
@@ -234,16 +232,10 @@ function showLoaded() {
 	if (device == "pc") 
 	{
 		var cards = document.getElementsByClassName("card");
-		var cardTitles = document.querySelectorAll("card-title");
 		
 		for (let i = cards.length-1; i >= 0; i--) {
 			cards[i].style.marginLeft = "462px";
 			cards[i].style.height = "200px";
-		}
-
-		for (let i = cardTitles.length-1; i >= 0; i--) {
-			console.log("yes");
-			cardTitles[i].style.fontSize = "100";
 		}
 	}
 }
@@ -301,8 +293,24 @@ function openBlog(blogId, device) {
 		drawerTitle.style.transition = "all .1s";
 		drawerDesc.style.transition = "all .1s";
 
-		// call one line to remove body
-		document.getElementById("body").remove();
+		try 
+		{
+			cardCollection = document.getElementsByClassName("card");
+
+			for (let x = cardCollection.length-1; x >= 0; x--) {
+				cardCollection[x].style.transition = "all .2s";
+				cardCollection[x].style.opacity = "0";
+
+				setTimeout(function() {
+					cardCollection[x].style.display = "none";
+					cardCollection[x].remove();
+				},200);
+			}
+		}
+		catch(err)
+		{
+			
+		};
 
 		setTimeout(function() {
 			var blog = document.createElement('div');
