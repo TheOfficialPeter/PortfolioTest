@@ -39,6 +39,21 @@ cursor: pointer;
 font-family: 'Open Sans';
 }
 
+#tiktok:hover {
+transition: all .1s;
+outline: 2px solid white;
+}
+
+#instagram:hover {
+transition: all .1s;
+outline: 2px solid white;
+}
+
+#linkedIn:hover {
+transition: all .1s;
+outline: 2px solid white;
+}
+
 #right {
 font-weight: 600;
 transition: all .2s;
@@ -94,11 +109,11 @@ bottom: 0;
 }
 
 .card:hover {
-transform: scale(1.1);
+transform: scale(1.05);
 transition: all .2s;
 }
 
-#card-title {
+.card-title {
 position: absolute;
 background-color: black;
 width: max-content;

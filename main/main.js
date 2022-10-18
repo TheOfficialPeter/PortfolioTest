@@ -1,7 +1,7 @@
 var navList = ["Journal", "Education", "Contact"];
 var device = "pc";
 var navList2 = [];
-const descList = ["yes", "yes", "yes"];
+const descList = ["Sharing information", "My study life", "Contact info"];
 
 function removeNavList() {
 	for (let i = 0; i < navList.length; i++) {
@@ -34,7 +34,7 @@ function makeNavListInvisible() {
 currentNavItem = "Journal";
 function addCardEvents() {
 	document.getElementById('left').onclick = function(e) {
-		if (device == "mobile" && document.getElementsByClassName('card')[0].style.display !== 'none') {
+		if (device == "mobile") {
 			var close = document.createElement("h1");
 			close.style = "opacity: 0; font-weight: 100; cursor: pointer; transition: all .2s; position: absolute; color: white; backgound-color: black; font-size: 50px; right: 50px; top: 20px; font-family: Open Sans";
 			close.innerText = "<";
@@ -64,13 +64,30 @@ function addCardEvents() {
 
 				for (let y = 0; y < navList2.length; y++) {
 					navList2[y].onclick = function() {
-						document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
+						if (navList2[y].id !== currentNavItem) {
+							document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
 
-						navList2[y].style.color = "white";
-						currentNavItem = navList2[y].id;
+							navList2[y].style.color = "white";
+							currentNavItem = navList2[y].id;
 
-						document.getElementById('right').innerText = navList2[y].id;
-						document.getElementById('desc').innerText = descList[y];
+							document.getElementById('right').innerText = navList2[y].id;
+							document.getElementById('desc').innerText = descList[y];
+
+							console.log(navList2[y].id);
+							if (navList2[y].id === "Journal") {
+								showLoaded();
+							}
+							else
+							{
+								var newBody = document.getElementById("body");
+								newBody.style.transition = "all .2s";
+								newBody.style.opacity = "0";
+
+								setTimeout(function() {a
+									newBody.remove();
+								},200)
+							}
+						}
 					}
 				}
 			})();
@@ -121,8 +138,30 @@ function pcMode() {
 	nav.id = "navDrawer";
 	nav.style = "z-index: 99; position: absolute; left; 0; top: 0; bottom: 0; width: 462px; background: linear-gradient(0deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url('https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');";
 
+	// Extra socials
+	/*
+	var instagram = document.createElement("div");
+	instagram.style = "transition: all .1s; position: absolute; bottom: 50px; width: 50px; height: 50px; border-radius: 50%; outline: 2px solid gray; left: calc(50% - 50px/2); cursor: pointer;";
+	instagram.id = "instagram";
+
+	var tiktok = document.createElement("div");
+	tiktok.style = "transition: all .1s; position: absolute; bottom: 50px; width: 50px; height: 50px; border-radius: 50%; outline: 2px solid gray; left: calc(50% - 50px/2 - 100px); cursor: pointer;";
+	tiktok.id = "tiktok";
+
+	var linkedIn = document.createElement("div");
+	linkedIn.style = "transition: all .1s; position: absolute; bottom: 50px; width: 50px; height: 50px; border-radius: 50%; outline: 2px solid gray; left: calc(50% - 50px/2 + 100px); cursor: pointer;";
+	linkedIn.id = "linkedIn";
+
+	nav.appendChild(instagram);
+	nav.appendChild(tiktok);
+	nav.appendChild(linkedIn);
+	*/
+
 	var title = document.getElementById('right');
 	var desc = document.getElementById('desc');
+
+	desc.style.fontSize = "20px";
+	desc.style.width = "auto";
 
 	title.style.marginLeft = "462px";
 	title.style.left = "5%";
@@ -148,16 +187,16 @@ function pcMode() {
 	(function () {
 		for (let x = 0; x < navList.length; x++) {
 			var navItem = document.createElement("h1");
-			navItem.style = "cursor: pointer; position: absolute; padding-left: 20px; font-weight: 300; font-size: 30px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
+			navItem.style = "cursor: pointer; position: absolute; padding-left: 20px; font-weight: 100; font-size: 50px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
 			navItem.style.transition = "all .2s";
 
 			if (x == 0) {
 				navItem.style.color = "white";
-				navItem.style.borderLeft = "4px solid white";
+				navItem.style.borderLeft = "10px solid white";
 			}
 
 			navItem.style.top = "200px";
-			navItem.style.marginTop = (x*75).toString() + "px";
+			navItem.style.marginTop = (x*100).toString() + "px";
 			navItem.id = navList[x].toString();
 			navItem.innerText = navList[x];
 
@@ -172,24 +211,229 @@ function pcMode() {
 
 		for (let y = 0; y < navList2.length; y++) {
 			navList2[y].onclick = function() {
-				document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
-				document.getElementById(currentNavItem).style.borderLeft = "";
+				if (navList2[y].id !== currentNavItem) {
+					document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
+					document.getElementById(currentNavItem).style.borderLeft = "";
 
-				navList2[y].style.color = "white";
-				navList2[y].style.borderLeft = "4px solid white";
-				currentNavItem = navList2[y].id;
+					navList2[y].style.color = "white";
+					navList2[y].style.borderLeft = "10px solid white";
+					currentNavItem = navList2[y].id;
 
-				document.getElementById('right').innerText = navList2[y].id;
-				document.getElementById('desc').innerText = descList[y];
+					if (navList2[y].id === "Journal") {
+						title.style.opacity = "0";
+						desc.style.opacity = "0";
+
+						setTimeout(function() {
+							title.innerText = navList2[y].id;
+							desc.innerText = descList[y];
+						},100);
+
+						setTimeout(function() {
+							title.style.opacity = "1";
+							desc.style.opacity = "1";
+						},100);
+
+						showLoaded();
+					}
+					else if (navList2[y].id == "Education") {
+						var menuImage = document.getElementById("menu-img")
+						menuImage.style.transition = "all .2s";
+						menuImage.style.opacity = "0";
+
+						title.style.opacity = "0";
+						desc.style.opacity = "0";
+
+						setTimeout(function() {
+							title.innerText = navList2[y].id;
+							desc.innerText = descList[y];
+						},100);
+
+						setTimeout(function() {
+							title.style.opacity = "1";
+							desc.style.opacity = "1";
+
+							title.style.paddingLeft = "0";
+							desc.style.paddingLeft = "0";	
+						},100);
+						
+						var blog = document.getElementById("blog");
+						if (blog !== null) {
+							blog.style.paddingLeft = "0";
+							blog.style.opacity = "0";
+							blog.innerText = "";
+						}
+						
+						setTimeout(function() {
+							menuImage.src = "./Menu.svg";
+							menuImage.style.marginLeft = "0";
+							if (blog !== null) {
+								blog.remove();
+							}
+						},200);
+
+						var newBody = document.getElementById("body");
+
+						if (newBody !== null) {
+							newBody.style.transition = "all .2s";
+							newBody.style.opacity = "0";
+
+							setTimeout(function() {
+								var newBody = document.getElementById("body");
+								newBody.remove();
+								
+								var newBody = document.createElement("div");
+								newBody.id = "body";
+
+								var cvButton = document.createElement("div");
+								var borderBox = document.createElement("div");
+								var borderBoxTitle1 = document.createElement("h1");
+								var borderBoxTitle2 = document.createElement("h1");
+								var borderBoxBody1 = document.createElement("h1");
+								var borderBoxBody2 = document.createElement("h1");
+
+								cvButton.id = "cvButton";
+								cvButton.style = "text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; box-shadow: 0 0 4px black; border-radius: 50px; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
+								cvButton.innerText = "download cv";
+
+								newBody.appendChild(cvButton);
+								document.body.appendChild(newBody);
+							},200)
+						}
+						else
+						{
+							var newBody = document.createElement("div");
+							newBody.id = "body";
+
+							var cvButton = document.createElement("div");
+							var borderBox = document.createElement("div");
+							var borderBoxTitle1 = document.createElement("h1");
+							var borderBoxTitle2 = document.createElement("h1");
+							var borderBoxBody1 = document.createElement("h1");
+							var borderBoxBody2 = document.createElement("h1");
+
+							cvButton.id = "cvButton";
+							cvButton.style = "text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; box-shadow: 0 0 4px black; border-radius: 50px; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
+							cvButton.innerText = "download cv";
+
+							newBody.appendChild(cvButton);
+							document.body.appendChild(newBody);
+
+						}
+					}
+					else if (navList2[y].id == "Contact") {
+						var menuImage = document.getElementById("menu-img")
+						menuImage.style.transition = "all .2s";
+						menuImage.style.opacity = "0";
+
+						title.style.opacity = "0";
+						desc.style.opacity = "0";
+
+						setTimeout(function() {
+							title.innerText = navList2[y].id;
+							desc.innerText = descList[y];
+						},100);
+
+						setTimeout(function() {
+							title.style.opacity = "1";
+							desc.style.opacity = "1";
+
+							title.style.paddingLeft = "0";
+							desc.style.paddingLeft = "0";	
+						},100);
+						
+						var blog = document.getElementById("blog");
+						if (blog !== null) {
+							blog.style.paddingLeft = "0";
+							blog.style.opacity = "0";
+							blog.innerText = "";
+						}
+						
+						setTimeout(function() {
+							menuImage.src = "./Menu.svg";
+							menuImage.style.marginLeft = "0";
+							if (blog !== null) {
+								blog.remove();
+							}
+						},200);
+
+						var newBody = document.getElementById("body");
+
+						if (newBody !== null) {
+							newBody.style.transition = "all .2s";
+							newBody.style.opacity = "0";
+
+							setTimeout(function() {
+								var newBody = document.getElementById("body");
+								newBody.remove();
+								
+								var newBody = document.createElement("div");
+								newBody.id = "body";
+
+								document.body.appendChild(newBody);
+							},200)
+						}
+						else 
+						{
+							var newBody = document.createElement("div");
+							newBody.id = "body";
+
+							document.body.appendChild(newBody);
+						}
+					}
+					else
+					{
+						var menuImage = document.getElementById("menu-img")
+						menuImage.style.transition = "all .2s";
+						menuImage.style.opacity = "0";
+
+						title.style.opacity = "0";
+						desc.style.opacity = "0";
+
+						setTimeout(function() {
+							title.innerText = navList2[y].id;
+							desc.innerText = descList[y];
+						},100);
+
+						setTimeout(function() {
+							title.style.opacity = "1";
+							desc.style.opacity = "1";
+
+							title.style.paddingLeft = "0";
+							desc.style.paddingLeft = "0";	
+						},100);
+						
+						var blog = document.getElementById("blog");
+						if (blog !== null) {
+							blog.style.paddingLeft = "0";
+							blog.style.opacity = "0";
+							blog.innerText = "";
+						}
+						
+						setTimeout(function() {
+							menuImage.src = "./Menu.svg";
+							menuImage.style.marginLeft = "0";
+							if (blog !== null) {
+								blog.remove();
+							}
+						},200);
+
+						var newBody = document.getElementById("body");
+
+						if (newBody !== null) {
+							newBody.style.transition = "all .2s";
+							newBody.style.opacity = "0";
+
+							setTimeout(function() {
+								newBody.remove();
+							},200)
+						}
+					}
+				}
 			}
 		}
 	})();
 	
 	document.body.appendChild(nav);
-}
-
-function getAuth() {
-	return true;
 }
 
 function checkLoading() {
@@ -201,27 +445,37 @@ function animateLoading() {
 }
 
 function showLoaded() {
+	var newBody = document.getElementById("body");
+	if (newBody !== null) {
+		newBody.remove();
+	}
 
 	var newBody = document.createElement("div");
 	newBody.id = "body";
+	newBody.style.transition = "all .2s";
+	newBody.style.opacity = "0";
+	
 	document.body.appendChild(newBody);
+	setTimeout(function() {
+		newBody.style.opacity = "1";
+	},10)
 
-	for (let i = 1; i < 4; i++) {
+	for (let i = 1; i < 6; i++) {
 		var newCard = document.createElement("div");
 		newCard.className = "card";
 
 		var newCardImage = document.createElement("div");
 		newCardImage.id = "card-image";
+		newCardImage.style.backgroundSize = "100%";
 		newCardImage.style.backgroundImage = "url(https://images.unsplash.com/photo-1500259783852-0ca9ce8a64dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80)";
 
 		var newCardTitle = document.createElement("div");
-		newCardTitle.id = "card-title";
+		newCardTitle.className = "card-title";
 		newCardTitle.style.zIndex = "20"; 
-		newCardTitle.innerText = "1 How we got here";
+		newCardTitle.innerText = "1 What I have learned";
 
 		newCard.style.display = "initial";
-		newCard.style.marginTop = (-73+(175+42)*i).toString() + "px";
-		newCard.style.backgroundSize = "100%";
+		newCard.style.marginTop = (-73+(175+75)*i).toString() + "px";
 		newCard.style.opacity = "1";
 		
 		newBody.appendChild(newCard);
@@ -234,7 +488,7 @@ function showLoaded() {
 	if (device == "pc") 
 	{
 		var cards = document.getElementsByClassName("card");
-		var cardTitles = document.querySelectorAll("card-title");
+		var cardTitles = document.getElementsByClassName("card-title");
 		
 		for (let i = cards.length-1; i >= 0; i--) {
 			cards[i].style.marginLeft = "462px";
@@ -242,8 +496,7 @@ function showLoaded() {
 		}
 
 		for (let i = cardTitles.length-1; i >= 0; i--) {
-			console.log("yes");
-			cardTitles[i].style.fontSize = "100";
+			cardTitles[i].style.fontSize = "25px";
 		}
 	}
 }
@@ -304,6 +557,16 @@ function openBlog(blogId, device) {
 		// call one line to remove body
 		document.getElementById("body").remove();
 
+		title.style.opacity = "0";
+		desc.style.opacity = "0";
+
+		setTimeout(function() {
+			title.innerText = "What I have learned";
+			desc.innerText = "My story";
+			title.style.opacity = "1";
+			desc.style.opacity = "1";
+		},200);
+
 		setTimeout(function() {
 			var blog = document.createElement('div');
 			blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; margin-left: 462px; left: 5%; right: 5%;";
@@ -313,6 +576,7 @@ function openBlog(blogId, device) {
 
 			title.style.paddingLeft = "5%";
 			desc.style.paddingLeft = "5%";
+			blog.style.paddingLeft = "5%";
 			menuImage.style.opacity = "1";
 			menuImage.style.marginLeft = "462px";
 			menuImage.src = "./Back.svg";
@@ -320,13 +584,23 @@ function openBlog(blogId, device) {
 			setTimeout(function() {
 				menuImage.onclick = function() {
 					menuImage.style.opacity = "0";
+					
+					title.style.opacity = "0";
+					desc.style.opacity = "0";
+
 					title.style.paddingLeft = "0";
 					desc.style.paddingLeft = "0";
+					blog.style.paddingLeft = "0";
 					blog.style.opacity = "0";
 					blog.innerText = "";
 					
 					setTimeout(function() {
+						title.style.opacity = "1";
+						desc.style.opacity = "1";
+
 						menuImage.src = "./Menu.svg";
+						title.innerText = navList[0];
+						desc.innerText = descList[0];
 						menuImage.style.marginLeft = "0";
 						blog.remove();
 						showLoaded();
@@ -353,7 +627,7 @@ function openBlog(blogId, device) {
 			title.style.fontSize = "30px";
 
 			// This part should change with the cards info
-			title.innerText = "How we got here";
+			title.innerText = "What I have learned";
 			desc.innerText = "My story";
 			desc.style.marginTop = "-20px";
 			var blog = document.createElement('div');
