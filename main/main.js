@@ -136,7 +136,7 @@ function showLockPopup() {
 function pcMode() {
 	var nav = document.createElement("div");
 	nav.id = "navDrawer";
-	nav.style = "z-index: 99; position: absolute; left; 0; top: 0; bottom: 0; width: 462px; background: linear-gradient(0deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url('https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');";
+	nav.style = "z-index: 99; position: fixed; left; 0; top: 0; bottom: 0; width: 462px; background: linear-gradient(0deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url('https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');";
 
 	// Extra socials
 	/*
@@ -159,16 +159,21 @@ function pcMode() {
 
 	var title = document.getElementById('right');
 	var desc = document.getElementById('desc');
+	var menuImage = document.getElementById("menu-img");
+
+	menuImage.style.marginTop = "50px";
 
 	desc.style.fontSize = "20px";
 	desc.style.width = "auto";
 
 	title.style.marginLeft = "462px";
 	title.style.left = "5%";
+	title.style.fontSize = "75px";
 
 	desc.style.marginLeft = "462px";
 	desc.style.left = "5%";
 	desc.style.textAlign = "left";
+	desc.style.marginTop = "30px";
 
 	var navTitle = document.createElement("h1");
 	var navDesc = document.createElement("h1");
@@ -179,7 +184,7 @@ function pcMode() {
 	navDesc.style = "color: white; font-family: Fanwood Text; font-size: 20px; left: calc(50% - 462px/2); width: 462px; text-align: center; position: absolute; top: 75px; font-weight: 100;";
 
 	navTitle.innerText = "Karla Malan";
-	navDesc.innerText = "Marketing";
+	navDesc.innerText = "22. Marketing Student";
 
 	nav.appendChild(navTitle);
 	nav.appendChild(navDesc);
@@ -283,19 +288,6 @@ function pcMode() {
 								
 								var newBody = document.createElement("div");
 								newBody.id = "body";
-
-								var cvButton = document.createElement("div");
-								var borderBox = document.createElement("div");
-								var borderBoxTitle1 = document.createElement("h1");
-								var borderBoxTitle2 = document.createElement("h1");
-								var borderBoxBody1 = document.createElement("h1");
-								var borderBoxBody2 = document.createElement("h1");
-
-								cvButton.id = "cvButton";
-								cvButton.style = "text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; box-shadow: 0 0 4px black; border-radius: 50px; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
-								cvButton.innerText = "download cv";
-
-								newBody.appendChild(cvButton);
 								document.body.appendChild(newBody);
 							},200)
 						}
@@ -303,22 +295,60 @@ function pcMode() {
 						{
 							var newBody = document.createElement("div");
 							newBody.id = "body";
+							document.body.appendChild(newBody);
+						}
+						
 
-							var cvButton = document.createElement("div");
+						setTimeout(function() {
+							var cvButton = document.createElement("a");
+							var previewCV = document.createElement("div");
+							/*
 							var borderBox = document.createElement("div");
 							var borderBoxTitle1 = document.createElement("h1");
 							var borderBoxTitle2 = document.createElement("h1");
 							var borderBoxBody1 = document.createElement("h1");
 							var borderBoxBody2 = document.createElement("h1");
+							*/
+							var newBody = document.getElementById("body");
 
 							cvButton.id = "cvButton";
-							cvButton.style = "text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; box-shadow: 0 0 4px black; border-radius: 50px; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
+							cvButton.href = "";
+							cvButton.style = "color: black; text-decoration: none; text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; box-shadow: 0 0 2px black; border-radius: 50px; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
 							cvButton.innerText = "download cv";
 
-							newBody.appendChild(cvButton);
-							document.body.appendChild(newBody);
+							previewCV.id = "previewCV";
+							previewCV.style = "position: absolute; left: 5%; margin-left: 462px; top: 400px; background-color: rgba(100,100,100,.5); width: 1000px; height: 1000px";
 
-						}
+							/*
+							borderBox.id = "borderBox";
+							borderBox.style = "position: absolute; margin-left: 462px; left: 5%; right: 5%; top: 344px; box-shadow: 0 0 2px black; bottom: 5%;";
+
+							borderBoxTitle1.id = "borderBoxTitle1";
+							borderBoxTitle1.style = "position: absolute; top: 22px; margin: 0; left: 30px; font-family: Catamaran; font-size: 45px; font-weight: 400;";
+							borderBoxTitle1.innerText = "School";
+
+							borderBoxTitle2.id = "borderBoxTitle2";
+							borderBoxTitle2.style = "position: absolute; top: 50%; margin: 0; left: 30px; font-family: Catamaran; font-size: 45px; font-weight: 400;";
+							borderBoxTitle2.innerText = "University";
+
+							borderBoxBody1.id = "borderBoxBody1";
+							borderBoxBody1.style = "position: absolute; top: 96px; margin: 0; left: 30px; font-family: Catamaran; font-size: 20px; font-weight: 400;";
+							borderBoxBody1.innerText = "-Hello\n-World";
+
+							borderBoxBody2.id = "borderBoxBody2";
+							borderBoxBody2.style = "position: absolute; top: calc(50% + 75px); margin: 0; left: 30px; font-family: Catamaran; font-size: 20px; font-weight: 400;";
+							borderBoxBody2.innerText = "-Hello\n-World";
+							
+							borderBox.appendChild(borderBoxTitle1);
+							borderBox.appendChild(borderBoxTitle2);
+							borderBox.appendChild(borderBoxBody1);
+							borderBox.appendChild(borderBoxBody2);
+							newBody.appendChild(borderBox);
+							*/
+							newBody.appendChild(cvButton);
+							newBody.appendChild(previewCV);
+							document.body.appendChild(newBody);
+						},200);
 					}
 					else if (navList2[y].id == "Contact") {
 						var menuImage = document.getElementById("menu-img")
@@ -346,15 +376,13 @@ function pcMode() {
 							blog.style.paddingLeft = "0";
 							blog.style.opacity = "0";
 							blog.innerText = "";
-						}
-						
-						setTimeout(function() {
-							menuImage.src = "./Menu.svg";
-							menuImage.style.marginLeft = "0";
-							if (blog !== null) {
+
+							setTimeout(function() {
+								menuImage.src = "./Menu.svg";
+								menuImage.style.marginLeft = "0";
 								blog.remove();
-							}
-						},200);
+							},200);
+						}
 
 						var newBody = document.getElementById("body");
 
@@ -379,6 +407,108 @@ function pcMode() {
 
 							document.body.appendChild(newBody);
 						}
+
+						// Elements for the Contact form
+						setTimeout(function() {
+							// grab the new/old newBody
+							var newBody = document.getElementById("body");
+
+							var mainText = document.createElement("h1");
+							var contactTitle = document.createElement("h1");
+							var whoToContactBox = document.createElement("div");
+							var whoToContactText = document.createElement("h1");
+							var messageHeaderBox = document.createElement("div");
+							var messageHeaderText = document.createElement("h1");
+							var messageBodyBox = document.createElement("div");
+							var messageBodyText = document.createElement("h1");
+							var sendButton = document.createElement("div");
+
+							mainText.id = "mainText";
+							mainText.style = "position: absolute; font-size: 25px; left: 5%; margin-left: 462px; margin-top: 25px; top: 125px; font-family: Fanwood Text;";
+							mainText.innerHTML = "Website made by <font size=35>Pieter Malan</font> (hover over this text for more info)";
+							
+							contactTitle.id = "contactTitle";
+							contactTitle.style = "position: absolute; font-weight: 400; top: 275px; left: 5%; margin-left: 462px; font-size: 45px; font-family: Catamaran;";
+							contactTitle.innerText = "Contact Form";
+
+							whoToContactBox.id = "whoToContactBox";
+							whoToContactBox.style = "position: absolute; top: 400px; left: 5%; margin-left: 462px; height: 85px; width: 270px; outline: 1px solid rgba(0,0,0,.5)";
+
+							whoToContactText.id = "whoToContactText";
+							whoToContactText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 22px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
+							whoToContactText.innerText = "Who to contact?";
+
+							messageHeaderBox.id = "messageHeaderBox";
+							messageHeaderBox.style = "position: absolute; top: 500px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
+
+							messageHeaderText.id = "messageHeaderText";
+							messageHeaderText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 22px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
+							messageHeaderText.innerText = "Message Header";
+
+							messageBodyBox.id = "messageBodyBox";
+							messageBodyBox.style = "position: absolute; top: 600px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
+
+							messageBodyText.id = "messageBodyText";
+							messageBodyText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 22px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
+							messageBodyText.innerText = "Message Body";
+
+							sendButton.id = "sendButton";
+							sendButton.style = "position: absolute; font-size: 30px; font-family: Catamaran; font-weight: 400; left: 5%; margin-left: 462px; top: 700px; height: 88px; width: 224px; text-align: center; line-height: 90px; cursor: pointer; letter-spacing: 0.2em; color: white; background-color: black;";
+							sendButton.innerText = "SEND";
+
+							// Get my personal info
+							mainText.onmouseenter = function(e) {
+								var peterBox = document.createElement("div");
+								var peterTitle = document.createElement("h1");
+								var peterBody = document.createElement("h1");
+
+								peterBox.className = "peterBox";
+								peterBox.style = "margin-top: 20px; margin-left: 20px; position: absolute; background-color: black; color: white; height: 352px; width: 554px; transition: all .2s; opacity: 0";
+								peterBox.style.left = e.pageX.toString() + "px";
+								peterBox.style.top = e.pageY.toString() + "px";
+
+								peterTitle.id = "peterTitle";
+								peterTitle.style = "color: white; font-size: 40px; font-family: Catamaran; position: absolute; top: 6px; margin: 0; left: 21px; font-weight: 600;";
+								peterTitle.innerText = "Hi there!";
+		
+								peterBody.id = "peterBody";
+								peterBody.style = "color: rgba(255,255,255,.5); font-size: 20px; font-family: Open Sans; position: absolute; top: 65px; left: 21px; right: 90px; font-weight: 400;";
+								peterBody.innerHTML = "My name is Pieter Malan. I am a general-purpose programmer meaning I code anything that sounds interesting. This can range from websites to machine learning to custom 3d graphics in openGL/webGL to reverse engineering. <font color=white>( I also do UI design )</font> If you would like to hire me please make use of the contact form on the website and choose my name. <font color=white>Thanks for reading.</font>";
+
+								peterBox.appendChild(peterTitle);
+								peterBox.appendChild(peterBody);
+								document.body.appendChild(peterBox);
+
+								setTimeout(function() {
+									peterBox.style.opacity = "1";
+								},10);
+							}
+
+							mainText.onmouseleave = function(e) {
+								var peterBoxes = document.getElementsByClassName("peterBox");
+								
+								if (peterBoxes !== null) {
+									for (let i = 0; i < peterBoxes.length; i++) {
+										peterBoxes[i].style.opacity = "0";
+									
+										setTimeout(function() {
+											peterBoxes[i].remove();
+										},200);
+									}
+								}
+							}
+
+							newBody.appendChild(mainText);
+							newBody.appendChild(contactTitle);
+							newBody.appendChild(whoToContactBox);
+							newBody.appendChild(messageHeaderBox);
+							newBody.appendChild(messageBodyBox);
+							newBody.appendChild(sendButton);
+							whoToContactBox.appendChild(whoToContactText);
+							messageHeaderBox.appendChild(messageHeaderText);
+							messageBodyBox.appendChild(messageBodyText);
+
+						},200);
 					}
 					else
 					{
@@ -466,16 +596,17 @@ function showLoaded() {
 
 		var newCardImage = document.createElement("div");
 		newCardImage.id = "card-image";
-		newCardImage.style.backgroundSize = "100%";
-		newCardImage.style.backgroundImage = "url(https://images.unsplash.com/photo-1500259783852-0ca9ce8a64dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80)";
+		newCardImage.style.backgroundSize = "cover";
+		newCardImage.style.backgroundPosition = "50%";
+		newCardImage.style.backgroundImage = "url(https://images.unsplash.com/photo-1508020268086-b96cf4f4bb2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)";
 
 		var newCardTitle = document.createElement("div");
 		newCardTitle.className = "card-title";
 		newCardTitle.style.zIndex = "20"; 
-		newCardTitle.innerText = "1 What I have learned";
+		newCardTitle.innerText = i.toString() + " What I have learned";
 
 		newCard.style.display = "initial";
-		newCard.style.marginTop = (-73+(175+75)*i).toString() + "px";
+		newCard.style.marginTop = (-73+(175+150)*i).toString() + "px";
 		newCard.style.opacity = "1";
 		
 		newBody.appendChild(newCard);
@@ -492,11 +623,12 @@ function showLoaded() {
 		
 		for (let i = cards.length-1; i >= 0; i--) {
 			cards[i].style.marginLeft = "462px";
-			cards[i].style.height = "200px";
+			cards[i].style.height = "284px";
 		}
 
 		for (let i = cardTitles.length-1; i >= 0; i--) {
-			cardTitles[i].style.fontSize = "25px";
+			cardTitles[i].style.fontSize = "30px";
+			cardTitles[i].style.padding = "30px";
 		}
 	}
 }
@@ -507,9 +639,9 @@ function addBlogEvent() {
 	for (let x = cards.length-1; x >= 0; x--) {
 		cards[x].onclick = function(e) {
 			var circle = document.createElement("div");
-			var circleX = (e.clientX);
-			var circleY = (e.clientY);
-			circle.style = "position: absolute; opacity: 1; background-color: white; z-index: 99; border-radius: 50%; transition: all .4s;";
+			var circleX = (e.pageX);
+			var circleY = (e.pageY);
+			circle.style = "position: absolute; opacity: 1; background-color: white; z-index: 99; border-radius: 50%; transition: all .2s;";
 			circle.style.left = circleX.toString() + "px";
 			circle.style.top = circleY.toString() + "px";
 			circle.id = "circle";
@@ -527,7 +659,7 @@ function addBlogEvent() {
 			},10)
 			setTimeout(function() {
 				circle.remove();
-			},300);
+			},200);
 		}
 	}
 }
@@ -550,17 +682,22 @@ function openBlog(blogId, device) {
 		var desc = document.getElementById('desc');
 		var drawerTitle = document.getElementById("newDrawerTitle");
 		var drawerDesc = document.getElementById("newDrawerDesc");
+		var newBody = document.getElementById("body");
+
+		// set image before changing position of menu icon
+		menuImage.src = "./Back.svg";
 
 		drawerTitle.style.transition = "all .1s";
 		drawerDesc.style.transition = "all .1s";
 
-		// call one line to remove body
-		document.getElementById("body").remove();
-
 		title.style.opacity = "0";
 		desc.style.opacity = "0";
 
+		newBody.style.transition = "all .2s";
+		newBody.style.opacity = "0";
+		
 		setTimeout(function() {
+			newBody.remove();
 			title.innerText = "What I have learned";
 			desc.innerText = "My story";
 			title.style.opacity = "1";
@@ -579,7 +716,6 @@ function openBlog(blogId, device) {
 			blog.style.paddingLeft = "5%";
 			menuImage.style.opacity = "1";
 			menuImage.style.marginLeft = "462px";
-			menuImage.src = "./Back.svg";
 
 			setTimeout(function() {
 				menuImage.onclick = function() {
