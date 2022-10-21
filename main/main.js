@@ -3,6 +3,19 @@ var device = "pc";
 var navList2 = [];
 const descList = ["Sharing information", "My study life", "Contact info"];
 
+function checkScroll(newBody) {
+	newBody.addEventListener("scroll", (event) => {
+		var nav = document.getElementById("nav");
+		if (newBody.scrollTop > 10) {
+			nav.style.boxShadow = "0 4px 20px rgba(0,0,0,.2)";
+		}
+		else
+		{
+			nav.style.boxShadow = "";
+		}
+	});
+}
+
 function removeNavList() {
 	for (let i = 0; i < navList.length; i++) {
 		var navItem = document.getElementById(navList[i]);
@@ -83,7 +96,7 @@ function addCardEvents() {
 								newBody.style.transition = "all .2s";
 								newBody.style.opacity = "0";
 
-								setTimeout(function() {a
+								setTimeout(function() {
 									newBody.remove();
 								},200)
 							}
@@ -136,7 +149,7 @@ function showLockPopup() {
 function pcMode() {
 	var nav = document.createElement("div");
 	nav.id = "navDrawer";
-	nav.style = "z-index: 99; position: fixed; left; 0; top: 0; bottom: 0; width: 462px; background: linear-gradient(0deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url('https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');";
+	nav.style = "z-index: 1001; position: fixed; left; 0; top: 0; bottom: 0; width: 462px; background: linear-gradient(0deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url('https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');";
 
 	// Extra socials
 	/*
@@ -289,6 +302,8 @@ function pcMode() {
 								var newBody = document.createElement("div");
 								newBody.id = "body";
 								document.body.appendChild(newBody);
+
+								checkScroll(newBody);
 							},200)
 						}
 						else
@@ -296,6 +311,8 @@ function pcMode() {
 							var newBody = document.createElement("div");
 							newBody.id = "body";
 							document.body.appendChild(newBody);
+
+							checkScroll(newBody);
 						}
 						
 
@@ -398,6 +415,8 @@ function pcMode() {
 								newBody.id = "body";
 
 								document.body.appendChild(newBody);
+
+								checkScroll(newBody);
 							},200)
 						}
 						else 
@@ -406,6 +425,8 @@ function pcMode() {
 							newBody.id = "body";
 
 							document.body.appendChild(newBody);
+
+							checkScroll(newBody);
 						}
 
 						// Elements for the Contact form
@@ -464,8 +485,14 @@ function pcMode() {
 
 								peterBox.className = "peterBox";
 								peterBox.style = "margin-top: 20px; margin-left: 20px; position: absolute; background-color: black; color: white; height: 352px; width: 554px; transition: all .2s; opacity: 0";
+								
 								peterBox.style.left = e.pageX.toString() + "px";
 								peterBox.style.top = e.pageY.toString() + "px";
+								
+								addEventListener('mousemove', (event) => {
+									peterBox.style.left = event.pageX.toString() + "px";
+									peterBox.style.top = event.pageY.toString() + "px";
+								});
 
 								peterTitle.id = "peterTitle";
 								peterTitle.style = "color: white; font-size: 40px; font-family: Catamaran; position: absolute; top: 6px; margin: 0; left: 21px; font-weight: 600;";
@@ -586,6 +613,9 @@ function showLoaded() {
 	newBody.style.opacity = "0";
 	
 	document.body.appendChild(newBody);
+
+	checkScroll(newBody);
+
 	setTimeout(function() {
 		newBody.style.opacity = "1";
 	},10)

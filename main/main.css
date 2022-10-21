@@ -24,6 +24,12 @@ overflow-x: hidden;
 }
 
 #nav {
+z-index: 1000;
+position: fixed;
+left: 0;
+right: 0;
+height: 175px;
+background-color: white;
 margin: 0;
 font-family: 'Catamaran';
 font-weight: 600;
@@ -31,7 +37,6 @@ font-size: 50px;
 }
 
 #left {
-z-index: 999;
 float: left;
 width: max-content;
 position: absolute;
@@ -39,6 +44,7 @@ left: 23px;
 top: 20px;
 cursor: pointer;
 font-family: 'Open Sans';
+z-index: 999;
 }
 
 #tiktok:hover {
@@ -69,6 +75,7 @@ top: 20px;
 }
 
 #desc {
+z-index: 1001;
 text-align: right;
 transition: all .2s;
 position: absolute;
