@@ -1,6 +1,7 @@
 var navList = ["Journal", "Education", "Contact"];
 var device = "pc";
 var navList2 = [];
+var isBlogOpen = false;
 var navDrawerGradientDirection = "top";
 var navDrawerTextColor = "255,255,255";
 var navDrawerImage = "https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80";
@@ -48,15 +49,15 @@ function makeNavListInvisible() {
 }
 
 currentNavItem = "Journal";
-function addCardEvents() {
+function mobileMode() {
 	document.getElementById('left').onclick = function(e) {
-		if (device == "mobile") {
+		if (device == "mobile" && isBlogOpen == false) {
 			var close = document.createElement("h1");
-			close.style = "opacity: 0; font-weight: 100; cursor: pointer; transition: all .2s; position: absolute; color: white; backgound-color: black; font-size: 50px; right: 50px; top: 20px; font-family: Open Sans";
+			close.style = "z-index: 1003; opacity: 0; font-weight: 100; cursor: pointer; transition: all .2s; position: absolute; color: white; backgound-color: black; font-size: 50px; right: 50px; top: 20px; font-family: Open Sans";
 			close.innerText = "<";
 			
 			var drawer = document.createElement("div");
-			drawer.style = "position: absolute; left: 0; top: 0; bottom: 0; background-color: black; transition: all 1s;";
+			drawer.style = "z-index: 1002; position: absolute; left: 0; top: 0; bottom: 0; background-color: black; transition: all 1s;";
 			drawer.id = "drawer";
 
 			navList2 = [];
@@ -83,26 +84,46 @@ function addCardEvents() {
 						if (navList2[y].id !== currentNavItem) {
 							document.getElementById(currentNavItem).style.color = "rgba(255,255,255,.5)";
 
+							nav.style.boxShadow = "";
+
 							navList2[y].style.color = "white";
 							currentNavItem = navList2[y].id;
 
 							document.getElementById('right').innerText = navList2[y].id;
 							document.getElementById('desc').innerText = descList[y];
 
-							console.log(navList2[y].id);
 							if (navList2[y].id === "Journal") {
 								showLoaded();
 							}
 							else
 							{
 								var newBody = document.getElementById("body");
-								newBody.style.transition = "all .2s";
-								newBody.style.opacity = "0";
+								
+								if (newBody !== null) {
+									newBody.style.transition = "all .2s";
+									newBody.style.opacity = "0";
 
-								setTimeout(function() {
-									newBody.remove();
-								},200)
+									setTimeout(function() {
+										newBody.remove();
+
+										newBody = document.createElement("div");
+										newBody.id = "body";
+									},200);
+								}
+								else
+								{
+									newBody = document.createElement("div");
+									newBody.id = "body";
+								}
 							}
+
+							close.innerHTML = "";
+							drawer.style.paddingRight = "0";
+							removeNavList();
+
+							setTimeout(function() {
+								drawer.remove();
+							},1000);
 						}
 					}
 				}
@@ -269,12 +290,12 @@ function pcMode() {
 						setTimeout(function() {
 							title.innerText = navList2[y].id;
 							desc.innerText = descList[y];
-						},100);
+						},200);
 
 						setTimeout(function() {
 							title.style.opacity = "1";
 							desc.style.opacity = "1";
-						},100);
+						},200);
 
 						showLoaded();
 					}
@@ -289,7 +310,7 @@ function pcMode() {
 						setTimeout(function() {
 							title.innerText = navList2[y].id;
 							desc.innerText = descList[y];
-						},100);
+						},200);
 
 						setTimeout(function() {
 							title.style.opacity = "1";
@@ -297,19 +318,19 @@ function pcMode() {
 
 							title.style.paddingLeft = "0";
 							desc.style.paddingLeft = "0";	
-						},100);
+						},200);
 						
 						var blog = document.getElementById("blog");
 						if (blog !== null) {
 							blog.style.paddingLeft = "0";
 							blog.style.opacity = "0";
-							blog.innerText = "";
 						}
 						
 						setTimeout(function() {
 							menuImage.src = "./Menu.svg";
 							menuImage.style.marginLeft = "0";
 							if (blog !== null) {
+								blog.innerText = "";
 								blog.remove();
 							}
 						},200);
@@ -321,10 +342,10 @@ function pcMode() {
 							newBody.style.opacity = "0";
 
 							setTimeout(function() {
-								var newBody = document.getElementById("body");
+								newBody = document.getElementById("body");
 								newBody.remove();
 								
-								var newBody = document.createElement("div");
+								newBody = document.createElement("div");
 								newBody.id = "body";
 								document.body.appendChild(newBody);
 
@@ -333,14 +354,13 @@ function pcMode() {
 						}
 						else
 						{
-							var newBody = document.createElement("div");
+							newBody = document.createElement("div");
 							newBody.id = "body";
 							document.body.appendChild(newBody);
 
 							checkScroll(newBody);
 						}
 						
-
 						setTimeout(function() {
 							var cvButton = document.createElement("a");
 							var previewCV = document.createElement("div");
@@ -390,6 +410,10 @@ function pcMode() {
 							newBody.appendChild(cvButton);
 							newBody.appendChild(previewCV);
 							document.body.appendChild(newBody);
+
+							setTimeout(function() {
+								newBody.style.opacity = "1";
+							},10);
 						},200);
 					}
 					else if (navList2[y].id == "Contact") {
@@ -403,7 +427,7 @@ function pcMode() {
 						setTimeout(function() {
 							title.innerText = navList2[y].id;
 							desc.innerText = descList[y];
-						},100);
+						},200);
 
 						setTimeout(function() {
 							title.style.opacity = "1";
@@ -411,7 +435,7 @@ function pcMode() {
 
 							title.style.paddingLeft = "0";
 							desc.style.paddingLeft = "0";	
-						},100);
+						},200);
 						
 						var blog = document.getElementById("blog");
 						if (blog !== null) {
@@ -433,10 +457,10 @@ function pcMode() {
 							newBody.style.opacity = "0";
 
 							setTimeout(function() {
-								var newBody = document.getElementById("body");
+								newBody = document.getElementById("body");
 								newBody.remove();
 								
-								var newBody = document.createElement("div");
+								newBody = document.createElement("div");
 								newBody.id = "body";
 
 								document.body.appendChild(newBody);
@@ -446,7 +470,7 @@ function pcMode() {
 						}
 						else 
 						{
-							var newBody = document.createElement("div");
+							newBody = document.createElement("div");
 							newBody.id = "body";
 
 							document.body.appendChild(newBody);
@@ -454,20 +478,20 @@ function pcMode() {
 							checkScroll(newBody);
 						}
 
+
 						// Elements for the Contact form
 						setTimeout(function() {
 							// grab the new/old newBody
 							var newBody = document.getElementById("body");
-
+							
+							var isContactSelectOpen = false;
 							var mainText = document.createElement("h1");
 							var contactTitle = document.createElement("h1");
 							var whoToContactBox = document.createElement("div");
 							var whoToContactText = document.createElement("h1");
-							var messageHeaderBox = document.createElement("div");
-							var messageHeaderText = document.createElement("h1");
-							var messageBodyBox = document.createElement("div");
-							var messageBodyText = document.createElement("h1");
-							var sendButton = document.createElement("div");
+							var messageHeaderBox = document.createElement("input");
+							var messageBodyBox = document.createElement("input");
+							var sendButton = document.createElement("a");
 
 							mainText.id = "mainText";
 							mainText.style = "position: absolute; font-size: 25px; left: 5%; margin-left: 462px; margin-top: 25px; top: 150px; font-family: Fanwood Text;";
@@ -478,75 +502,85 @@ function pcMode() {
 							contactTitle.innerText = "Contact Form";
 
 							whoToContactBox.id = "whoToContactBox";
-							whoToContactBox.style = "position: absolute; top: 400px; left: 5%; margin-left: 462px; height: 85px; width: 225px; outline: 1px solid rgba(0,0,0,.5)";
-
+							whoToContactBox.style = "position: absolute; top: 405px; left: 5%; margin-left: 462px; height: 85px; width: 225px; outline: 2px solid rgba(0,0,0,.5)";
+							
 							whoToContactBox.onclick = function() {
-								var karla = document.createElement("div");
-								var pieter = document.createElement("div");
+								if (isContactSelectOpen == false) {
+									isContactSelectOpen = true;
+									var karla = document.createElement("div");
+									var pieter = document.createElement("div");
 
-								karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 400px; left: 5%; text-align: center; margin-left: 700px; height: 0px; width: 200px; background-color: black;";
-								pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 400px; left: 5%; margin-left: 912px; text-align: center; height: 0px; width: 200px; background-color: black;";
+									karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; text-align: center; margin-left: 700px; height: 0px; width: 200px; background-color: black;";
+									pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; margin-left: 912px; text-align: center; height: 0px; width: 200px; background-color: black;";
 
-								karla.innerText = "Karla";
-								pieter.innerText = "Pieter";
+									karla.innerText = "Karla";
+									pieter.innerText = "Pieter";
 
-								newBody.appendChild(karla);
-								newBody.appendChild(pieter);
+									newBody.appendChild(karla);
+									newBody.appendChild(pieter);
 
-								setTimeout(function() {
-									karla.style.paddingTop = "25px";
-									pieter.style.paddingTop = "25px";
-									karla.style.height = "60px";
-									pieter.style.height = "60px";
-								},10);
+									setTimeout(function() {
+										karla.style.paddingTop = "25px";
+										pieter.style.paddingTop = "25px";
+										karla.style.height = "60px";
+										pieter.style.height = "60px";
+									},10);
 
-								setTimeout(function() {
-									karla.onclick = function() {
-										pieter.innerText = "";
-										pieter.style.height = "0";
-										pieter.style.paddingTop = "0";
-										
-										karla.innerText = "";
-										karla.style.height = "0";
-										karla.style.paddingTop = "0";
-										
-										whoToContactText.innerText = "Karla";
-									}
+									setTimeout(function() {
+										karla.onclick = function() {
+											pieter.innerText = "";
+											pieter.style.height = "0";
+											pieter.style.paddingTop = "0";
+											
+											karla.innerText = "";
+											karla.style.height = "0";
+											karla.style.paddingTop = "0";
+											
+											whoToContactText.innerText = "Karla";
+											isContactSelectOpen = false;
+										}
 
-									pieter.onclick = function() {
-										pieter.innerText = "";
-										pieter.style.height = "0";
-										pieter.style.paddingTop = "0";
-										
-										karla.innerText = "";
-										karla.style.height = "0";
-										karla.style.paddingTop = "0";
+										pieter.onclick = function() {
+											pieter.innerText = "";
+											pieter.style.height = "0";
+											pieter.style.paddingTop = "0";
+											
+											karla.innerText = "";
+											karla.style.height = "0";
+											karla.style.paddingTop = "0";
 
-										whoToContactText.innerText = "Pieter";
-									}
-								},300)
+											whoToContactText.innerText = "Pieter";
+											isContactSelectOpen = false;
+										}
+									},300)
+								}
 							}
 
 							whoToContactText.id = "whoToContactText";
-							whoToContactText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 22px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
+							whoToContactText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 5px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
 							whoToContactText.innerText = "Who to contact?";
 
 							messageHeaderBox.id = "messageHeaderBox";
-							messageHeaderBox.style = "position: absolute; top: 500px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
-
-							messageHeaderText.id = "messageHeaderText";
-							messageHeaderText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 22px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
-							messageHeaderText.innerText = "Message Header";
+							messageHeaderBox.placeholder = "Message Header";
+							messageHeaderBox.style = "color: rgba(0,0,0,.4); font-size: 22px; position: absolute; top: 500px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
 
 							messageBodyBox.id = "messageBodyBox";
-							messageBodyBox.style = "position: absolute; top: 600px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
-
-							messageBodyText.id = "messageBodyText";
-							messageBodyText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 22px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
-							messageBodyText.innerText = "Message Body";
+							messageBodyBox.placeholder = "Message Body";
+							messageBodyBox.style = "color: rgba(0,0,0,.4); font-size: 22px; position: absolute; top: 600px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5);";
 
 							sendButton.id = "sendButton";
-							sendButton.style = "position: absolute; font-size: 30px; font-family: Catamaran; font-weight: 400; left: 5%; margin-left: 462px; top: 700px; height: 88px; width: 224px; text-align: center; line-height: 90px; cursor: pointer; letter-spacing: 0.2em; color: white; background-color: black;";
+						
+							sendButton.onclick = function() {
+								if (whoToContactText.innerText == "Karla") {
+									window.location.assign("mailto:karla@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+								}
+								else if (whoToContactText.innerText == "Pieter")
+								{
+									window.location.assign("mailto:pieter@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+								}
+							}
+								
+							sendButton.style = "position: absolute; text-decoration: none; font-size: 30px; font-family: Catamaran; font-weight: 400; left: 5%; margin-left: 462px; top: 700px; height: 88px; width: 224px; text-align: center; line-height: 90px; cursor: pointer; letter-spacing: 0.2em; color: white; background-color: black;";
 							sendButton.innerText = "SEND";
 
 							// Get my personal info
@@ -606,9 +640,10 @@ function pcMode() {
 							newBody.appendChild(messageBodyBox);
 							newBody.appendChild(sendButton);
 							whoToContactBox.appendChild(whoToContactText);
-							messageHeaderBox.appendChild(messageHeaderText);
-							messageBodyBox.appendChild(messageBodyText);
 
+							setTimeout(function() {
+								newBody.style.opacity = "1";
+							},10);
 						},200);
 					}
 					else
@@ -683,18 +718,12 @@ function showLoaded() {
 
 	var newBody = document.createElement("div");
 	newBody.id = "body";
-	newBody.style.transition = "all .2s";
-	newBody.style.opacity = "0";
 	
 	document.body.appendChild(newBody);
-
+	
 	checkScroll(newBody);
 
-	setTimeout(function() {
-		newBody.style.opacity = "1";
-	},10)
-
-	for (let i = 1; i < 10; i++) {
+	for (let i = 1; i <= 10; i++) {
 		var newCard = document.createElement("div");
 		newCard.className = "card";
 
@@ -710,14 +739,22 @@ function showLoaded() {
 		newCardTitle.innerText = i.toString() + " What I have learned";
 
 		newCard.style.display = "initial";
-		newCard.style.marginTop = (-73+(175+150)*i).toString() + "px";
+
+		if (device == "pc") {
+			newCard.style.marginTop = (-73+(175+150)*i).toString() + "px";
+		}
+		else
+		{
+			newCard.style.marginTop = (-100+(175+100)*i).toString() + "px";
+		}
+
 		newCard.style.opacity = "1";
 		
 		newBody.appendChild(newCard);
 		newCard.appendChild(newCardTitle);
 		newCard.appendChild(newCardImage);
 	}
-	addCardEvents();
+	//mobileMode();
 	addBlogEvent();
 
 	if (device == "pc") 
@@ -735,6 +772,10 @@ function showLoaded() {
 			cardTitles[i].style.padding = "30px";
 		}
 	}
+
+	setTimeout(function() {
+		newBody.style.opacity = "1";
+	},200)
 }
 
 function addBlogEvent() {
@@ -769,7 +810,6 @@ function addBlogEvent() {
 }
 
 window.onload = function() {
-	console.log("loading...");
 	animateLoading();
 	showLoaded();
 	pcMode();
@@ -853,6 +893,7 @@ function openBlog(blogId, device) {
 	}
 	else
 	{
+		isBlogOpen = true;
 		blogId = parseInt(blogId);
 		var cards = document.getElementsByClassName('card');
 		var nav = document.getElementById('nav');
@@ -866,27 +907,28 @@ function openBlog(blogId, device) {
 		},100);
 
 		setTimeout(function() {
-			title.style.fontSize = "30px";
-
+			
 			// This part should change with the cards info
 			title.innerText = "What I have learned";
 			desc.innerText = "My story";
 			desc.style.marginTop = "-20px";
 			var blog = document.createElement('div');
-			blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; left: 10%; right: 15%;";
+			blog.style = "font-family: Fanwood Text; font-size: 20px; color: black; position: absolute; top: 150px; left: 5%; right: 5%;";
 			blog.id = "blog";
-			blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+			blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 			document.body.appendChild(blog);
 
-			for (let x = 0; x < cards.length; x++) {
-				cards[x].style.display = "none";
-			}
+			document.getElementById("body").remove();
 
 			document.body.style.opacity = "1";
 		},500);
 		
 		setTimeout(function() {
+			nav.style.boxShadow = "";
+			nav.style.height = "120px";
+
 			menuImage.src = "./Back.svg";
+			title.style.fontSize = "30px";
 		},400)
 		
 		setTimeout(function() {
@@ -894,6 +936,7 @@ function openBlog(blogId, device) {
 				document.body.style.opacity = "0";
 				setTimeout(function() {
 					location.reload();
+					isBlogOpen = false;
 				},400)
 			}
 		},300);

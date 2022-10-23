@@ -94,7 +94,7 @@ display: none;
 position: absolute;
 left: 5%;
 right: 5%;
-height: 144px;
+height: 200px;
 text-align: center;
 cursor: pointer;
 margin-top: 144px;
@@ -111,6 +111,8 @@ z-index: 1;
 }
 
 #body {
+transition: all .2s;
+opacity: 0;
 position: absolute;
 overflow: auto;
 left: 0;
@@ -130,7 +132,7 @@ position: absolute;
 background-color: black;
 width: max-content;
 font-family: 'Fanwood Text';
-font-size: 20px;
+font-size: 25px;
 height: auto;
 padding: 10px;
 left: 0;
