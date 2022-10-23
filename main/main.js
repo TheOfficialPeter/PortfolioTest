@@ -1,6 +1,7 @@
 var navList = ["Journal", "Education", "Contact"];
-var device = "pc";
+var device = "mobile";
 var navList2 = [];
+var navDrawerDesc = "22. Marketing Student";
 var isBlogOpen = false;
 var navDrawerGradientDirection = "top";
 var navDrawerTextColor = "255,255,255";
@@ -65,7 +66,7 @@ function mobileMode() {
 			(function () {
 				for (let x = 0; x < navList.length; x++) {
 					var navItem = document.createElement("h1");
-					navItem.style = "opacity: 0; cursor: pointer; position: absolute; padding-left: 20px; font-weight: 300; font-size: 50px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
+					navItem.style = "opacity: 0; cursor: pointer; position: absolute; padding-left: 20px; font-weight: 100; font-size: 50px; font-family: Catamaran; left: 34px; color: rgba(255,255,255,.5);";
 					navItem.style.top = "100px";
 					navItem.style.marginTop = (x*75).toString() + "px";
 					navItem.id = navList[x].toString();
@@ -94,6 +95,304 @@ function mobileMode() {
 
 							if (navList2[y].id === "Journal") {
 								showLoaded();
+							}
+							else if (navList2[y].id == "Education") {
+								var menuImage = document.getElementById("menu-img")
+								
+								var newBody = document.getElementById("body");
+
+								if (newBody !== null) {
+									newBody.style.transition = "all .2s";
+									newBody.style.opacity = "0";
+
+									setTimeout(function() {
+										newBody = document.getElementById("body");
+										newBody.remove();
+										
+										newBody = document.createElement("div");
+										newBody.id = "body";
+										document.body.appendChild(newBody);
+
+										checkScroll(newBody);
+									},200)
+								}
+								else
+								{
+									newBody = document.createElement("div");
+									newBody.id = "body";
+									document.body.appendChild(newBody);
+
+									checkScroll(newBody);
+								}
+								
+								setTimeout(function() {
+									var cvButton = document.createElement("a");
+									var previewCV = document.createElement("div");
+									/*
+									var borderBox = document.createElement("div");
+									var borderBoxTitle1 = document.createElement("h1");
+									var borderBoxTitle2 = document.createElement("h1");
+									var borderBoxBody1 = document.createElement("h1");
+									var borderBoxBody2 = document.createElement("h1");
+									*/
+									var newBody = document.getElementById("body");
+
+									cvButton.href = "";
+									cvButton.style = "transition: all .2s; color: black; text-decoration: none; text-align: center; position: absolute; left: 5%; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; outline: 2px solid gray; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
+									cvButton.innerText = "download cv";
+									cvButton.id = "cvButton";
+
+									cvButton.onmouseover = function() {
+										cvButton.style.color = "white";
+										cvButton.style.background = "black";
+										cvButton.style.outline = "";
+									}
+
+									cvButton.onmouseleave = function() {
+										cvButton.style.color = "black";
+										cvButton.style.background = "transparent";
+										cvButton.style.outline = "2px solid gray";
+									}
+
+									previewCV.id = "previewCV";
+									previewCV.style = "position: absolute; left: 5%; top: 300px; background-color: rgba(100,100,100,.5); width: 500px; height: 1000px";
+
+									/*
+									borderBox.id = "borderBox";
+									borderBox.style = "position: absolute; margin-left: 462px; left: 5%; right: 5%; top: 344px; box-shadow: 0 0 2px black; bottom: 5%;";
+
+									borderBoxTitle1.id = "borderBoxTitle1";
+									borderBoxTitle1.style = "position: absolute; top: 22px; margin: 0; left: 30px; font-family: Catamaran; font-size: 45px; font-weight: 400;";
+									borderBoxTitle1.innerText = "School";
+
+									borderBoxTitle2.id = "borderBoxTitle2";
+									borderBoxTitle2.style = "position: absolute; top: 50%; margin: 0; left: 30px; font-family: Catamaran; font-size: 45px; font-weight: 400;";
+									borderBoxTitle2.innerText = "University";
+
+									borderBoxBody1.id = "borderBoxBody1";
+									borderBoxBody1.style = "position: absolute; top: 96px; margin: 0; left: 30px; font-family: Catamaran; font-size: 20px; font-weight: 400;";
+									borderBoxBody1.innerText = "-Hello\n-World";
+
+									borderBoxBody2.id = "borderBoxBody2";
+									borderBoxBody2.style = "position: absolute; top: calc(50% + 75px); margin: 0; left: 30px; font-family: Catamaran; font-size: 20px; font-weight: 400;";
+									borderBoxBody2.innerText = "-Hello\n-World";
+									
+									borderBox.appendChild(borderBoxTitle1);
+									borderBox.appendChild(borderBoxTitle2);
+									borderBox.appendChild(borderBoxBody1);
+									borderBox.appendChild(borderBoxBody2);
+									newBody.appendChild(borderBox);
+									*/
+									newBody.appendChild(cvButton);
+									newBody.appendChild(previewCV);
+									document.body.appendChild(newBody);
+
+									setTimeout(function() {
+										newBody.style.opacity = "1";
+									},10);
+								},200);
+							}
+							else if (navList2[y].id == "Contact") {
+								var newBody = document.getElementById("body");
+
+								if (newBody !== null) {
+									newBody.style.transition = "all .2s";
+									newBody.style.opacity = "0";
+
+									setTimeout(function() {
+										newBody = document.getElementById("body");
+										newBody.remove();
+										
+										newBody = document.createElement("div");
+										newBody.id = "body";
+
+										document.body.appendChild(newBody);
+
+										checkScroll(newBody);
+									},200)
+								}
+								else 
+								{
+									newBody = document.createElement("div");
+									newBody.id = "body";
+
+									document.body.appendChild(newBody);
+
+									checkScroll(newBody);
+								}
+
+
+								// Elements for the Contact form
+								setTimeout(function() {
+									// grab the new/old newBody
+									var newBody = document.getElementById("body");
+									
+									var isContactSelectOpen = false;
+									var mainText = document.createElement("h1");
+									var contactTitle = document.createElement("h1");
+									var whoToContactBox = document.createElement("div");
+									var whoToContactText = document.createElement("h1");
+									var messageHeaderBox = document.createElement("input");
+									var messageBodyBox = document.createElement("input");
+									var sendButton = document.createElement("a");
+
+									mainText.id = "mainText";
+									mainText.style = "position: absolute; font-size: 20px; left: 5%; margin-top: 25px; top: 150px; font-family: Fanwood Text;";
+									mainText.innerHTML = "Website made by <font style='font-size: 25px; font-weight: 1000;'>Pieter Malan</font> (click on this text for more info)";
+									
+									contactTitle.id = "contactTitle";
+									contactTitle.style = "position: absolute; font-weight: 400; top: 250px; left: 5%; font-size: 40px; font-family: Catamaran;";
+									contactTitle.innerText = "Contact Form";
+
+									whoToContactBox.id = "whoToContactBox";
+									whoToContactBox.style = "position: absolute; top: 350px; left: 5%;  height: 51px; width: 200px; outline: 2px solid rgba(0,0,0,.5)";
+									
+									whoToContactBox.onclick = function() {
+										if (isContactSelectOpen == false) {
+											isContactSelectOpen = true;
+											var karla = document.createElement("div");
+											var pieter = document.createElement("div");
+
+											karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 350px; left: 5%; text-align: center; margin-left: 210px; height: 0px; width: 50px; background-color: black;";
+											pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 350px; left: 5%; margin-left: 270px; text-align: center; height: 0px; width: 50px; background-color: black;";
+
+											karla.innerText = "K";
+											pieter.innerText = "P";
+
+											newBody.appendChild(karla);
+											newBody.appendChild(pieter);
+
+											setTimeout(function() {
+												karla.style.paddingTop = "10px";
+												pieter.style.paddingTop = "10px";
+												karla.style.height = "40px";
+												pieter.style.height = "40px";
+											},10);
+
+											setTimeout(function() {
+												karla.onclick = function() {
+													pieter.innerText = "";
+													pieter.style.height = "0";
+													pieter.style.paddingTop = "0";
+													
+													karla.innerText = "";
+													karla.style.height = "0";
+													karla.style.paddingTop = "0";
+													
+													whoToContactText.innerText = "Karla";
+													isContactSelectOpen = false;
+												}
+
+												pieter.onclick = function() {
+													pieter.innerText = "";
+													pieter.style.height = "0";
+													pieter.style.paddingTop = "0";
+													
+													karla.innerText = "";
+													karla.style.height = "0";
+													karla.style.paddingTop = "0";
+
+													whoToContactText.innerText = "Pieter";
+													isContactSelectOpen = false;
+												}
+											},300)
+										}
+									}
+
+									whoToContactText.id = "whoToContactText";
+									whoToContactText.style = "color: rgba(0,0,0,.6); line-height: 22px; position: absolute; left: 20px; top: 0; bottom: 0; font-size: 20px; font-family: Open Sans; font-weight: 400;";
+									whoToContactText.innerText = "Who to contact?";
+
+									messageHeaderBox.id = "messageHeaderBox";
+									messageHeaderBox.placeholder = "Message Header";
+									messageHeaderBox.style = "padding-left: 20px; color: rgba(0,0,0,1); font-size: 20px; position: absolute; top: 420px; left: 5%; height: 45px; font-family: Open Sans; width: 250px; outline: 1px solid rgba(0,0,0,.5)";
+
+									messageBodyBox.id = "messageBodyBox";
+									messageBodyBox.placeholder = "Message Body";
+									messageBodyBox.style = "padding-left: 20px; color: rgba(0,0,0,1); font-size: 20px; position: absolute; top: 490px; left: 5%; height: 45px; width: 250px; font-family: Open Sans; outline: 1px solid rgba(0,0,0,.5);";
+
+									sendButton.id = "sendButton";
+								
+									sendButton.onclick = function() {
+										if (whoToContactText.innerText == "Karla") {
+											window.location.assign("mailto:karla@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+										}
+										else if (whoToContactText.innerText == "Pieter")
+										{
+											window.location.assign("mailto:pieter@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+										}
+									}
+										
+									sendButton.style = "position: absolute; text-decoration: none; font-size: 25px; font-family: Catamaran; font-weight: 400; left: 5%; top: 550px; height: 75px; width: 200px; text-align: center; line-height: 75px; cursor: pointer; letter-spacing: 0.2em; color: white; background-color: black;";
+									sendButton.innerText = "SEND";
+
+									// Get my personal info
+									mainText.onclick = function(e) {
+										var background = document.createElement("div");
+										var peterBox = document.createElement("div");
+										var peterTitle = document.createElement("h1");
+										var peterBody = document.createElement("h1");
+
+										background.style = "opacity: 0; position: absolute; left: 0; top: 0; bottom: 0; right: 0; background: rgba(0,0,0,.5); z-index: 2000;";
+
+										peterBox.className = "peterBox";
+										peterBox.style = "z-index: 2001; position: absolute; background-color: black; color: white; height: 350px; width: 300px; transition: all .2s; opacity: 0";
+										
+										peterBox.style.left = "calc(50% - 300px/2)";
+										peterBox.style.top = "calc(50% - 350px/2)";
+										
+										peterTitle.id = "peterTitle";
+										peterTitle.style = "color: white; font-size: 30px; font-family: Catamaran; position: absolute; top: 20px; margin: 0; left: 10px; font-weight: 600;";
+										peterTitle.innerText = "Hi there!";
+				
+										peterBody.id = "peterBody";
+										peterBody.style = "color: rgba(255,255,255,.5); font-size: 16px; font-family: Open Sans; position: absolute; top: 70px; left: 10px; right: 10px; font-weight: 400;";
+										peterBody.innerHTML = "My name is Pieter Malan. I am a general-purpose programmer meaning I code anything that sounds interesting. This can range from websites to machine learning to custom 3d graphics in openGL/webGL to reverse engineering. <font color=white>( I also do UI design )</font> If you would like to hire me please make use of the contact form on the website and choose my name. <font color=white>Thanks for reading.</font>";
+
+										peterBox.appendChild(peterTitle);
+										peterBox.appendChild(peterBody);
+										document.body.appendChild(peterBox);
+										document.body.appendChild(background);
+
+										setTimeout(function() {
+											peterBox.style.opacity = "1";
+											background.style.opacity = "1";
+										},10);
+
+										setTimeout(function() {
+											document.body.onclick = function() {
+												var peterBoxes = document.getElementsByClassName("peterBox");
+											
+												if (peterBoxes !== null) {
+													for (let i = 0; i < peterBoxes.length; i++) {
+														peterBoxes[i].style.transition = "all .2s";
+														peterBoxes[i].style.opacity = "0";
+													
+														setTimeout(function() {
+															peterBoxes[i].remove();
+														},200);
+													}
+													background.remove();
+													document.body.onclick = function() {
+
+													}
+												}
+											}
+										},200);
+									}
+
+									newBody.appendChild(mainText);
+									newBody.appendChild(contactTitle);
+									newBody.appendChild(whoToContactBox);
+									newBody.appendChild(messageHeaderBox);
+									newBody.appendChild(messageBodyBox);
+									newBody.appendChild(sendButton);
+									whoToContactBox.appendChild(whoToContactText);
+
+									setTimeout(function() {
+										newBody.style.opacity = "1";
+									},10);
+								},200);
 							}
 							else
 							{
@@ -242,7 +541,7 @@ function pcMode() {
 	navDesc.style = "color: rgba(" + navDrawerTextColor + ",1); font-family: Fanwood Text; font-size: 20px; left: calc(50% - 462px/2); width: 462px; text-align: center; position: absolute; top: 75px; font-weight: 100;";
 
 	navTitle.innerText = "Karla Malan";
-	navDesc.innerText = "22. Marketing Student";
+	navDesc.innerText = navDrawerDesc;
 
 	nav.appendChild(navTitle);
 	nav.appendChild(navDesc);
@@ -373,10 +672,22 @@ function pcMode() {
 							*/
 							var newBody = document.getElementById("body");
 
-							cvButton.id = "cvButton";
 							cvButton.href = "";
-							cvButton.style = "color: black; text-decoration: none; text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; box-shadow: 0 0 2px black; border-radius: 50px; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
+							cvButton.style = "transition: all .2s; color: black; text-decoration: none; text-align: center; position: absolute; left: 5%; margin-left: 462px; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; outline: 2px solid gray; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
 							cvButton.innerText = "download cv";
+							cvButton.id = "cvButton";
+
+							cvButton.onmouseover = function() {
+								cvButton.style.color = "white";
+								cvButton.style.background = "black";
+								cvButton.style.outline = "";
+							}
+
+							cvButton.onmouseleave = function() {
+								cvButton.style.color = "black";
+								cvButton.style.background = "transparent";
+								cvButton.style.outline = "2px solid gray";
+							}
 
 							previewCV.id = "previewCV";
 							previewCV.style = "position: absolute; left: 5%; margin-left: 462px; top: 300px; background-color: rgba(100,100,100,.5); width: 1000px; height: 1000px";
@@ -510,8 +821,8 @@ function pcMode() {
 									var karla = document.createElement("div");
 									var pieter = document.createElement("div");
 
-									karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; text-align: center; margin-left: 700px; height: 0px; width: 200px; background-color: black;";
-									pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; margin-left: 912px; text-align: center; height: 0px; width: 200px; background-color: black;";
+									karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; text-align: center; margin-left: 700px; height: 0px; width: 150px; background-color: black;";
+									pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; margin-left: 860px; text-align: center; height: 0px; width: 150px; background-color: black;";
 
 									karla.innerText = "Karla";
 									pieter.innerText = "Pieter";
@@ -557,16 +868,16 @@ function pcMode() {
 							}
 
 							whoToContactText.id = "whoToContactText";
-							whoToContactText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 5px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
+							whoToContactText.style = "color: rgba(0,0,0,.25); line-height: 50px; position: absolute; left: 20px; top: 0; bottom: 0; font-size: 22px; font-family: Open Sans; font-weight: 400;";
 							whoToContactText.innerText = "Who to contact?";
 
 							messageHeaderBox.id = "messageHeaderBox";
 							messageHeaderBox.placeholder = "Message Header";
-							messageHeaderBox.style = "color: rgba(0,0,0,.4); font-size: 22px; position: absolute; top: 500px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
+							messageHeaderBox.style = "padding-left: 20px; color: rgba(0,0,0,.4); font-size: 22px; position: absolute; top: 500px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5)";
 
 							messageBodyBox.id = "messageBodyBox";
 							messageBodyBox.placeholder = "Message Body";
-							messageBodyBox.style = "color: rgba(0,0,0,.4); font-size: 22px; position: absolute; top: 600px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5);";
+							messageBodyBox.style = "padding-left: 20px; color: rgba(0,0,0,.4); font-size: 22px; position: absolute; top: 600px; left: 5%; margin-left: 462px; height: 85px; width: 541px; outline: 1px solid rgba(0,0,0,.5);";
 
 							sendButton.id = "sendButton";
 						
@@ -745,7 +1056,7 @@ function showLoaded() {
 		}
 		else
 		{
-			newCard.style.marginTop = (-100+(175+100)*i).toString() + "px";
+			newCard.style.marginTop = (-75+(175+100)*i).toString() + "px";
 		}
 
 		newCard.style.opacity = "1";
@@ -754,7 +1065,7 @@ function showLoaded() {
 		newCard.appendChild(newCardTitle);
 		newCard.appendChild(newCardImage);
 	}
-	//mobileMode();
+	mobileMode();
 	addBlogEvent();
 
 	if (device == "pc") 
@@ -812,7 +1123,7 @@ function addBlogEvent() {
 window.onload = function() {
 	animateLoading();
 	showLoaded();
-	pcMode();
+	//pcMode();
 	
 	document.body.style.opacity = "1";
 }
