@@ -1,5 +1,5 @@
 var navList = ["Journal", "Education", "Contact"];
-var device = "mobile";
+var device = "";
 var navList2 = [];
 var navDrawerDesc = "22. Marketing Student";
 var isBlogOpen = false;
@@ -7,6 +7,15 @@ var navDrawerGradientDirection = "top";
 var navDrawerTextColor = "255,255,255";
 var navDrawerImage = "https://images.unsplash.com/photo-1490676174569-1fa40080e712?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80";
 const descList = ["Sharing information", "My study life", "Contact info"];
+
+// GET DEVICE
+if (window.innerWidth < 1200) {
+	device = "mobile";
+}
+else
+{
+	device = "pc";
+}
 
 function checkScroll(newBody) {
 	newBody.addEventListener("scroll", (event) => {
@@ -138,7 +147,7 @@ function mobileMode() {
 									var newBody = document.getElementById("body");
 
 									cvButton.href = "";
-									cvButton.style = "transition: all .2s; color: black; text-decoration: none; text-align: center; position: absolute; left: 5%; width: 255px; font-size: 22px; font-family: Catamaran; background: transparent; outline: 2px solid gray; height: 50px; padding-top: 20px; top: 208px; cursor: pointer;";
+									cvButton.style = "transition: all .2s; color: black; text-decoration: none; text-align: center; position: absolute; left: 5%; width: 150px; font-size: 20px; font-family: Catamaran; background: transparent; outline: 2px solid gray; height: 40px; padding-top: 10px; top: 208px; cursor: pointer;";
 									cvButton.innerText = "download cv";
 									cvButton.id = "cvButton";
 
@@ -155,7 +164,7 @@ function mobileMode() {
 									}
 
 									previewCV.id = "previewCV";
-									previewCV.style = "position: absolute; left: 5%; top: 300px; background-color: rgba(100,100,100,.5); width: 500px; height: 1000px";
+									previewCV.style = "position: absolute; left: 5%; top: 300px; background-color: rgba(100,100,100,.5); width: 300px; height: 750px";
 
 									/*
 									borderBox.id = "borderBox";
@@ -333,24 +342,19 @@ function mobileMode() {
 										var peterTitle = document.createElement("h1");
 										var peterBody = document.createElement("h1");
 
-										background.style = "opacity: 0; position: absolute; left: 0; top: 0; bottom: 0; right: 0; background: rgba(0,0,0,.5); z-index: 2000;";
+										background.style = "transition: all .2s; opacity: 0; position: absolute; left: 0; top: 0; bottom: 0; right: 0; background: rgba(0,0,0,.95); z-index: 2000;";
+										background.id = "background";
 
-										peterBox.className = "peterBox";
-										peterBox.style = "z-index: 2001; position: absolute; background-color: black; color: white; height: 350px; width: 300px; transition: all .2s; opacity: 0";
-										
-										peterBox.style.left = "calc(50% - 300px/2)";
-										peterBox.style.top = "calc(50% - 350px/2)";
-										
 										peterTitle.id = "peterTitle";
-										peterTitle.style = "color: white; font-size: 30px; font-family: Catamaran; position: absolute; top: 20px; margin: 0; left: 10px; font-weight: 600;";
+										peterTitle.style = "color: white; font-size: 30px; font-family: Catamaran; position: absolute; top: 100px; margin: 0; left: 10px; right: 10px; text-align: center; font-weight: 600;";
 										peterTitle.innerText = "Hi there!";
 				
 										peterBody.id = "peterBody";
-										peterBody.style = "color: rgba(255,255,255,.5); font-size: 16px; font-family: Open Sans; position: absolute; top: 70px; left: 10px; right: 10px; font-weight: 400;";
+										peterBody.style = "color: rgba(255,255,255,.5); font-size: 16px; font-family: Open Sans; position: absolute; top: 150px; text-align: center; left: 10px; right: 10px; font-weight: 400;";
 										peterBody.innerHTML = "My name is Pieter Malan. I am a general-purpose programmer meaning I code anything that sounds interesting. This can range from websites to machine learning to custom 3d graphics in openGL/webGL to reverse engineering. <font color=white>( I also do UI design )</font> If you would like to hire me please make use of the contact form on the website and choose my name. <font color=white>Thanks for reading.</font>";
 
-										peterBox.appendChild(peterTitle);
-										peterBox.appendChild(peterBody);
+										background.appendChild(peterTitle);
+										background.appendChild(peterBody);
 										document.body.appendChild(peterBox);
 										document.body.appendChild(background);
 
@@ -361,21 +365,16 @@ function mobileMode() {
 
 										setTimeout(function() {
 											document.body.onclick = function() {
-												var peterBoxes = document.getElementsByClassName("peterBox");
-											
-												if (peterBoxes !== null) {
-													for (let i = 0; i < peterBoxes.length; i++) {
-														peterBoxes[i].style.transition = "all .2s";
-														peterBoxes[i].style.opacity = "0";
-													
-														setTimeout(function() {
-															peterBoxes[i].remove();
-														},200);
-													}
-													background.remove();
-													document.body.onclick = function() {
+												var background = document.getElementById("background");
 
-													}
+												background.style.opacity = "0";
+
+												setTimeout(function() {
+													background.remove();
+												},200);
+											
+												document.body.onclick = function() {
+
 												}
 											}
 										},200);
@@ -525,12 +524,12 @@ function pcMode() {
 
 	title.style.marginLeft = "462px";
 	title.style.left = "5%";
-	title.style.fontSize = "75px";
+	title.style.fontSize = "60px";
 
 	desc.style.marginLeft = "462px";
 	desc.style.left = "5%";
 	desc.style.textAlign = "left";
-	desc.style.marginTop = "30px";
+	desc.style.marginTop = "18px";
 
 	var navTitle = document.createElement("h1");
 	var navDesc = document.createElement("h1");
@@ -806,7 +805,7 @@ function pcMode() {
 
 							mainText.id = "mainText";
 							mainText.style = "position: absolute; font-size: 25px; left: 5%; margin-left: 462px; margin-top: 25px; top: 150px; font-family: Fanwood Text;";
-							mainText.innerHTML = "Website made by <font size=35>Pieter Malan</font> (hover over this text for more info)";
+							mainText.innerHTML = "Website made by <font style='font-size: 35px'>Pieter Malan</font> (hover over this text for more info)";
 							
 							contactTitle.id = "contactTitle";
 							contactTitle.style = "position: absolute; font-weight: 400; top: 275px; left: 5%; margin-left: 462px; font-size: 45px; font-family: Catamaran;";
@@ -1065,7 +1064,12 @@ function showLoaded() {
 		newCard.appendChild(newCardTitle);
 		newCard.appendChild(newCardImage);
 	}
-	mobileMode();
+	
+	if (window.innerWidth < 1200) 
+	{
+		mobileMode();
+	}
+
 	addBlogEvent();
 
 	if (device == "pc") 
@@ -1123,7 +1127,11 @@ function addBlogEvent() {
 window.onload = function() {
 	animateLoading();
 	showLoaded();
-	//pcMode();
+
+	if (window.innerWidth >= 1200) 
+	{
+		pcMode();
+	}
 	
 	document.body.style.opacity = "1";
 }
