@@ -1,7 +1,7 @@
 fetch('config.txt').then(res => res.text()).then(function(response) {
 	var navList = response.split("|")[0].replace(/["']/g, "").replace(" ", "").replace(" ", "").split(",");
 	const descList = response.split("|")[1].replace("\n", "").replace(/["']/g, "").split(",");
-	var navDrawerDesc = response.split("|")[2].replace(/["']/g, "");
+	var navDrawerDesc = response.split("|")[2].replace(/["']/g, "").replace("\n", "");
 	var navDrawerGradientDirection = response.split("|")[3].replace("\n", "").replace(/["']/g, "");
 	var navDrawerTextColor = response.split("|")[4].replace("\n", "").replace(/["']/g, "");
 	var navDrawerImage = response.split("|")[5];
@@ -60,7 +60,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		}
 	}
 
-	currentNavItem = "Journal";
+	currentNavItem = navList[0];
 	function mobileMode() {
 		document.getElementById('left').onclick = function(e) {
 			if (device == "mobile" && isBlogOpen == false) {
@@ -104,10 +104,10 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 								document.getElementById('right').innerText = navList2[y].id;
 								document.getElementById('desc').innerText = descList[y];
 
-								if (navList2[y].id === "Journal") {
+								if (navList2[y].id === navList[0]) {
 									showLoaded();
 								}
-								else if (navList2[y].id == "Education") {
+								else if (navList2[y].id == navList[1]) {
 									var menuImage = document.getElementById("menu-img")
 									
 									var newBody = document.getElementById("body");
@@ -203,7 +203,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 										},10);
 									},200);
 								}
-								else if (navList2[y].id == "Contact") {
+								else if (navList2[y].id == navList[2]) {
 									var newBody = document.getElementById("body");
 
 									if (newBody !== null) {
@@ -471,6 +471,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 	}
 
 	function pcMode() {
+		var currentNavItem = navList[0];
 		var nav = document.createElement("div");
 		nav.id = "navDrawer";
 
@@ -495,6 +496,8 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		{
 			nav.style.background = "url("+navDrawerImage+")";
 		}
+
+		nav.style.backgroundSize = "cover";
 
 		// Extra socials
 		/*
@@ -583,7 +586,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 						navList2[y].style.borderLeft = "10px solid rgba(" + navDrawerTextColor + ",1)";
 						currentNavItem = navList2[y].id;
 
-						if (navList2[y].id === "Journal") {
+						if (navList2[y].id === navList[0]) {
 							title.style.opacity = "0";
 							desc.style.opacity = "0";
 
@@ -599,7 +602,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 
 							showLoaded();
 						}
-						else if (navList2[y].id == "Education") {
+						else if (navList2[y].id == navList[1]) {
 							var menuImage = document.getElementById("menu-img")
 							menuImage.style.transition = "all .2s";
 							menuImage.style.opacity = "0";
@@ -728,7 +731,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 								},10);
 							},200);
 						}
-						else if (navList2[y].id == "Contact") {
+						else if (navList2[y].id == navList[2]) {
 							var menuImage = document.getElementById("menu-img")
 							menuImage.style.transition = "all .2s";
 							menuImage.style.opacity = "0";
@@ -1014,14 +1017,6 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		document.body.appendChild(nav);
 	}
 
-	function checkLoading() {
-
-	}
-
-	function animateLoading() {
-
-	}
-
 	function showLoaded() {
 		var newBody = document.getElementById("body");
 		if (newBody !== null) {
@@ -1036,38 +1031,40 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		checkScroll(newBody);
 		
 		fetch('cards.txt').then(res => res.text()).then(function(response) {
-			var cards = response.split("|");
+			var cards = response.replace("\n", "").split("|");
 			for (let i = 0; i < cards.length; i++) {
 				var newCard = document.createElement("div");
 				newCard.className = "card";
-				newCard.id = cards[i].split("-")[0].toString() + "-" + cards[i].split("-")[1].toString();
+				newCard.id = cards[i].split("-")[0] + "-" + cards[i].split("-")[1];
 
-				var newCardImage = document.createElement("div");
-				newCardImage.id = "card-image";
-				newCardImage.style.backgroundSize = "cover";
-				newCardImage.style.backgroundPosition = "50%";
-				newCardImage.style.backgroundImage = "url(https://images.unsplash.com/photo-1508020268086-b96cf4f4bb2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)";
+				fetch('cards/'+newCard.id+'.txt').then(cardInfo => cardInfo.text()).then(function(cardInformation) {
+					var newCardImage = document.createElement("div");
+					newCardImage.id = "card-image";
+					newCardImage.style.backgroundSize = "cover";
+					newCardImage.style.backgroundPosition = "50%";
+					newCardImage.style.backgroundImage = cardInformation.split("|")[0].replace(/["']/g, "");
+
+					newCard.appendChild(newCardImage);
+				})
 
 				var newCardTitle = document.createElement("div");
 				newCardTitle.className = "card-title";
 				newCardTitle.style.zIndex = "20"; 
-				newCardTitle.innerText = cards[i].split("-")[0].toString() + "-" + cards[i].split("-")[1].toString();
-
+				newCardTitle.innerText = newCard.id;
 				newCard.style.display = "initial";
 
 				if (device == "pc") {
-					newCard.style.marginTop = (-73+(175+150)*i).toString() + "px";
+					newCard.style.marginTop = (-73+(175+150)*(i+1)).toString() + "px";
 				}
 				else
 				{
-					newCard.style.marginTop = (-75+(175+100)*i).toString() + "px";
+					newCard.style.marginTop = (-75+(175+100)*(i+1)).toString() + "px";
 				}
 
 				newCard.style.opacity = "1";
 				
 				newBody.appendChild(newCard);
 				newCard.appendChild(newCardTitle);
-				newCard.appendChild(newCardImage);
 			}
 			
 			if (window.innerWidth < 1200) 
@@ -1120,8 +1117,12 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 					circle.style.opacity = "0";
 					// ex: card-5 -> openBlog('5') 
 					
-					//openBlog(cards[x].id.split("-")[1], device);
-					openBlog(cards[x].id.toString().split("-")[1], device);
+					fetch('cards/'+cards[x].id+'.txt').then(cardInfo => cardInfo.text()).then(function(cardInformation) {
+						var description = cardInformation.replace(/["']/g, "").split("|")[1].replace("\n", "");
+						var blogBody = cardInformation.replace(/["']/g, "").split("|")[2].replace("\n", "");
+
+						openBlog(cards[x].id.toString().split("-")[1], description, blogBody, device);
+					});
 				},10)
 				setTimeout(function() {
 					circle.remove();
@@ -1130,7 +1131,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		}
 	}
 
-	function openBlog(blogName, device) {
+	function openBlog(blogName, descName, blogBody, device) {
 		if (device == "pc") {
 			var nav = document.getElementById('nav');
 			var menu = document.getElementById('left');
@@ -1158,7 +1159,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 			setTimeout(function() {
 				newBody.remove();
 				title.innerText = blogName;
-				desc.innerText = "Loren Ipsum";
+				desc.innerText = descName;
 				title.style.opacity = "1";
 				desc.style.opacity = "1";
 			},200);
@@ -1167,7 +1168,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 				var blog = document.createElement('div');
 				blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; margin-left: 462px; left: 5%; right: 5%;";
 				blog.id = "blog";
-				blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+				blog.innerText = blogBody;
 				document.body.appendChild(blog);
 
 				title.style.paddingLeft = "5%";
@@ -1207,7 +1208,6 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		else
 		{
 			isBlogOpen = true;
-			blogId = parseInt(blogId);
 			var cards = document.getElementsByClassName('card');
 			var nav = document.getElementById('nav');
 			var menu = document.getElementById('left');
@@ -1223,18 +1223,18 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 				
 				// This part should change with the cards info
 				title.innerText = blogName;
-				desc.innerText = "Loren Ipsum";
+				desc.innerText = descName;
 				desc.style.marginTop = "-20px";
 				var blog = document.createElement('div');
 				blog.style = "font-family: Fanwood Text; font-size: 20px; color: black; position: absolute; top: 150px; left: 5%; right: 5%;";
 				blog.id = "blog";
-				blog.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+				blog.innerText = blogBody;
 				document.body.appendChild(blog);
 
 				document.getElementById("body").remove();
 
 				document.body.style.opacity = "1";
-			},500);
+			},700);
 			
 			setTimeout(function() {
 				nav.style.boxShadow = "";
@@ -1256,7 +1256,10 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		}
 	}
 
-	animateLoading();
+	// ACTUAL CODE START :/
+
+	//change initial title text
+	document.getElementById("right").innerText = navList[0];
 	showLoaded();
 
 	if (window.innerWidth >= 1200) 
