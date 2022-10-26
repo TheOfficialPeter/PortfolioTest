@@ -1030,70 +1030,73 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		
 		checkScroll(newBody);
 		
-		fetch('cards.txt').then(res => res.text()).then(function(response) {
-			var cards = response.replace("\n", "").split("|");
-			for (let i = 0; i < cards.length; i++) {
-				var newCard = document.createElement("div");
-				newCard.className = "card";
-				newCard.id = cards[i].split("-")[0] + "-" + cards[i].split("-")[1];
+		(function () {
+			fetch('cards.txt').then(res => res.text()).then(function(response) {
+				var cards = response.replace("\n", "").split("|");
+				for (let i = 0; i < cards.length; i++) {
+					var cards2 = cards;
+					fetch('cards/'+(cards[i].split("-")[0] + "-" + cards[i].split("-")[1]).replace("\n","")+'.txt').then(cardInfo => cardInfo.text()).then(function(cardInformation) {
+						var newCard = document.createElement("div");
+						newCard.className = "card";
+						newCard.id = cards2[i].split("-")[0] + "-" + cards2[i].split("-")[1];
+						
+						var newCardImage = document.createElement("div");
+						newCardImage.id = "card-image";
+						newCardImage.style.backgroundSize = "cover";
+						newCardImage.style.backgroundPosition = "50%";
+						newCard.appendChild(newCardImage);
+						newCardImage.style.backgroundImage = cardInformation.split("|")[0].replace(/["']/g, "");
 
-				fetch('cards/'+newCard.id+'.txt').then(cardInfo => cardInfo.text()).then(function(cardInformation) {
-					var newCardImage = document.createElement("div");
-					newCardImage.id = "card-image";
-					newCardImage.style.backgroundSize = "cover";
-					newCardImage.style.backgroundPosition = "50%";
-					newCardImage.style.backgroundImage = cardInformation.split("|")[0].replace(/["']/g, "");
+						var newCardTitle = document.createElement("div");
+						newCardTitle.className = "card-title";
+						newCardTitle.style.zIndex = "20"; 
+						newCardTitle.innerText = cards2[i].split("-")[0] + " " + cards2[i].split("-")[1];
+						newCard.style.display = "initial";
 
-					newCard.appendChild(newCardImage);
-				})
+						if (device == "pc") {
+							newCard.style.marginTop = (-73+(175+150)*(i+1)).toString() + "px";
+						}
+						else
+						{
+							newCard.style.marginTop = (-75+(175+100)*(i+1)).toString() + "px";
+						}
 
-				var newCardTitle = document.createElement("div");
-				newCardTitle.className = "card-title";
-				newCardTitle.style.zIndex = "20"; 
-				newCardTitle.innerText = newCard.id;
-				newCard.style.display = "initial";
+						newCard.style.opacity = "1";
+						
+						newBody.appendChild(newCard);
+						newCard.appendChild(newCardTitle);
 
-				if (device == "pc") {
-					newCard.style.marginTop = (-73+(175+150)*(i+1)).toString() + "px";
+
+						if (window.innerWidth < 1200) 
+						{
+							mobileMode();
+						}
+
+						addBlogEvent();
+
+						if (device == "pc") 
+						{
+							var cards = document.getElementsByClassName("card");
+							var cardTitles = document.getElementsByClassName("card-title");
+							
+							for (let i = cards.length-1; i >= 0; i--) {
+								cards[i].style.marginLeft = "462px";
+								cards[i].style.height = "284px";
+							}
+
+							for (let i = cardTitles.length-1; i >= 0; i--) {
+								cardTitles[i].style.fontSize = "30px";
+								cardTitles[i].style.padding = "30px";
+							}
+						}
+
+						setTimeout(function() {
+							newBody.style.opacity = "1";
+						},200)
+					})
 				}
-				else
-				{
-					newCard.style.marginTop = (-75+(175+100)*(i+1)).toString() + "px";
-				}
-
-				newCard.style.opacity = "1";
-				
-				newBody.appendChild(newCard);
-				newCard.appendChild(newCardTitle);
-			}
-			
-			if (window.innerWidth < 1200) 
-			{
-				mobileMode();
-			}
-
-			addBlogEvent();
-
-			if (device == "pc") 
-			{
-				var cards = document.getElementsByClassName("card");
-				var cardTitles = document.getElementsByClassName("card-title");
-				
-				for (let i = cards.length-1; i >= 0; i--) {
-					cards[i].style.marginLeft = "462px";
-					cards[i].style.height = "284px";
-				}
-
-				for (let i = cardTitles.length-1; i >= 0; i--) {
-					cardTitles[i].style.fontSize = "30px";
-					cardTitles[i].style.padding = "30px";
-				}
-			}
-
-			setTimeout(function() {
-				newBody.style.opacity = "1";
-			},200)
-		})
+			})
+		})();
 	}
 
 	function addBlogEvent() {
@@ -1166,7 +1169,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 
 			setTimeout(function() {
 				var blog = document.createElement('div');
-				blog.style = "font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; margin-left: 462px; left: 5%; right: 5%;";
+				blog.style = "opacity: 0; transition: all .2s; font-family: Fanwood Text; font-size: 25px; color: black; position: absolute; top: 233px; margin-left: 462px; left: 5%; right: 5%;";
 				blog.id = "blog";
 				blog.innerText = blogBody;
 				document.body.appendChild(blog);
@@ -1178,6 +1181,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 				menuImage.style.marginLeft = "462px";
 
 				setTimeout(function() {
+					blog.style.opacity = "1";
 					menuImage.onclick = function() {
 						menuImage.style.opacity = "0";
 						
