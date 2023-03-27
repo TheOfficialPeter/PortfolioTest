@@ -1,0 +1,159 @@
+@font-face {
+	font-family: "Fanwood Text";
+	src: url("./fanwoodtext/FanwoodText.ttf");
+}
+
+@font-face {
+	font-family: "Catamaran";
+	src: url("./catamaran/Catamaran.ttf");
+}
+
+@font-face {
+	font-family: "Open Sans";
+	src: url("./opensans/OpenSans.ttf");
+}
+
+body {
+opacity: 0;
+margin-top: 0;
+margin-left: 0;
+margin-right: 0;
+transition: all .4s;
+overflow-x: hidden;
+-webkit-tap-highlight-color: transparent;
+}
+
+#body {
+padding-bottom: 100px;
+}
+
+#nav {
+z-index: 1000;
+position: fixed;
+left: 0;
+right: 0;
+height: 175px;
+background-color: white;
+margin: 0;
+font-family: 'Catamaran';
+font-weight: 600;
+font-size: 50px;
+}
+
+#left {
+float: left;
+width: max-content;
+position: absolute;
+left: 23px;
+top: 20px;
+cursor: pointer;
+font-family: 'Open Sans';
+z-index: 999;
+}
+
+#tiktok:hover {
+transition: all .1s;
+outline: 2px solid white;
+}
+
+#instagram:hover {
+transition: all .1s;
+outline: 2px solid white;
+}
+
+#linkedIn:hover {
+transition: all .1s;
+outline: 2px solid white;
+}
+
+#right {
+z-index: 999;
+font-weight: 600;
+transition: all .2s;
+font-family: 'Catamaran';
+float: right;
+position: absolute;
+right: 5%;
+width: max-content;
+top: 20px;
+}
+
+#desc {
+z-index: 1001;
+text-align: right;
+transition: all .2s;
+position: absolute;
+width: 203px;
+height: 16px;
+right: 5%;
+top: 86px;
+font-family: 'Open Sans';
+font-weight: 400;
+font-size: 12px;
+color: rgba(0, 0, 0, 0.25);
+}
+
+.card {
+display: none;
+position: absolute;
+left: 5%;
+right: 5%;
+height: 200px;
+text-align: center;
+cursor: pointer;
+margin-top: 144px;
+transition: all .2s;
+}
+
+#card-image {
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+z-index: 1;
+}
+
+#body {
+transition: all .2s;
+opacity: 0;
+position: absolute;
+overflow: auto;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+}
+
+.card:hover {
+transform: scale(1.05);
+box-shadow: 10px 10px 20px rgba(0,0,0,.3);
+transition: all .2s;
+}
+
+.card-title {
+position: absolute;
+background-color: black;
+width: max-content;
+font-family: 'Fanwood Text';
+font-size: 25px;
+height: auto;
+padding: 10px;
+left: 0;
+bottom: 0;
+color: white;
+}
+
+#card-edit {
+display: none;
+background-color: black;
+position: absolute;
+color: white;
+text-align: center;
+padding-top: 10px;
+right: 0;
+top: 0;
+width: 41px;
+height: 30px;
+transition: all .4s;
+}	
