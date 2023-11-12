@@ -262,36 +262,36 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 										whoToContactBox.onclick = function() {
 											if (isContactSelectOpen == false) {
 												isContactSelectOpen = true;
-												var karla = document.createElement("div");
+												var username = document.createElement("div");
 												var pieter = document.createElement("div");
 
-												karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 350px; left: 5%; text-align: center; margin-left: 210px; height: 0px; width: 50px; background-color: black;";
+												username.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 350px; left: 5%; text-align: center; margin-left: 210px; height: 0px; width: 50px; background-color: black;";
 												pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 350px; left: 5%; margin-left: 270px; text-align: center; height: 0px; width: 50px; background-color: black;";
 
-												karla.innerText = "K";
+												username.innerText = "K";
 												pieter.innerText = "P";
 
-												newBody.appendChild(karla);
+												newBody.appendChild(username);
 												newBody.appendChild(pieter);
 
 												setTimeout(function() {
-													karla.style.paddingTop = "10px";
+													username.style.paddingTop = "10px";
 													pieter.style.paddingTop = "10px";
-													karla.style.height = "40px";
+													username.style.height = "40px";
 													pieter.style.height = "40px";
 												},10);
 
 												setTimeout(function() {
-													karla.onclick = function() {
+													username.onclick = function() {
 														pieter.innerText = "";
 														pieter.style.height = "0";
 														pieter.style.paddingTop = "0";
 														
-														karla.innerText = "";
-														karla.style.height = "0";
-														karla.style.paddingTop = "0";
+														username.innerText = "";
+														username.style.height = "0";
+														username.style.paddingTop = "0";
 														
-														whoToContactText.innerText = "Karla";
+														whoToContactText.innerText = "Username";
 														isContactSelectOpen = false;
 													}
 
@@ -300,11 +300,11 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 														pieter.style.height = "0";
 														pieter.style.paddingTop = "0";
 														
-														karla.innerText = "";
-														karla.style.height = "0";
-														karla.style.paddingTop = "0";
+														username.innerText = "";
+														username.style.height = "0";
+														username.style.paddingTop = "0";
 
-														whoToContactText.innerText = "Pieter";
+														whoToContactText.innerText = "Peter";
 														isContactSelectOpen = false;
 													}
 												},300)
@@ -326,12 +326,12 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 										sendButton.id = "sendButton";
 									
 										sendButton.onclick = function() {
-											if (whoToContactText.innerText == "Karla") {
-												window.location.assign("mailto:karla@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+											if (whoToContactText.innerText == "Username") {
+												window.location.assign("mailto:username@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
 											}
-											else if (whoToContactText.innerText == "Pieter")
+											else if (whoToContactText.innerText == "Peter")
 											{
-												window.location.assign("mailto:pieter@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+												window.location.assign("mailto:peter@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
 											}
 										}
 											
@@ -477,24 +477,28 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		nav.id = "navDrawer";
 
 		nav.style = "z-index: 1001; position: fixed; left; 0; top: 0; bottom: 0; width: 462px;";
-
-		if (navDrawerGradientDirection == "top") {
+		if (navDrawerGradientDirection.includes("top")) {
 			nav.style.background = "linear-gradient(0deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url("+navDrawerImage+")";
 		}
-		else if (navDrawerGradientDirection == "bottom")
+		else if (navDrawerGradientDirection.includes("bottom"))
 		{
 			nav.style.background = "linear-gradient(180deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url("+navDrawerImage+")";
 		}
-		else if (navDrawerGradientDirection == "left")
+		else if (navDrawerGradientDirection.includes("left"))
 		{
 			nav.style.background = "linear-gradient(270deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url("+navDrawerImage+")";
 		}
-		else if (navDrawerGradientDirection == "right") 
+		else if (navDrawerGradientDirection.includes("right")) 
 		{
 			nav.style.background = "linear-gradient(90deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 1) 100%), url("+navDrawerImage+")";
 		}
-		else if (navDrawerGradientDirection == "none")
+		else if (navDrawerGradientDirection.includes("none"))
 		{
+			nav.style.background = "url("+navDrawerImage+")";
+		}
+		else
+		{
+			console.log('yes');
 			nav.style.background = "url("+navDrawerImage+")";
 		}
 
@@ -522,7 +526,8 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		var title = document.getElementById('right');
 		var desc = document.getElementById('desc');
 		var menuImage = document.getElementById("menu-img");
-
+		
+		menuImage.style.opacity = "0";
 		menuImage.style.marginTop = "50px";
 
 		desc.style.fontSize = "20px";
@@ -545,7 +550,7 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 		navTitle.style = "color: rgba(" + navDrawerTextColor + ",1); top: 22px; position: absolute; left: calc(50% - 462px/2); text-align: center; font-family: Catamaran; font-size: 50px; margin: 0; width: 462px; font-weight: 100;";
 		navDesc.style = "color: rgba(" + navDrawerTextColor + ",1); font-family: Fanwood Text; font-size: 20px; left: calc(50% - 462px/2); width: 462px; text-align: center; position: absolute; top: 75px; font-weight: 100;";
 
-		navTitle.innerText = "Karla Malan";
+		navTitle.innerText = "Username";
 		navDesc.innerText = navDrawerDesc;
 
 		nav.appendChild(navTitle);
@@ -823,34 +828,34 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 								whoToContactBox.onclick = function() {
 									if (isContactSelectOpen == false) {
 										isContactSelectOpen = true;
-										var karla = document.createElement("div");
+										var username = document.createElement("div");
 										var pieter = document.createElement("div");
 
-										karla.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; text-align: center; margin-left: 700px; height: 0px; width: 150px; background-color: black;";
+										username.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; text-align: center; margin-left: 700px; height: 0px; width: 150px; background-color: black;";
 										pieter.style = "cursor: pointer; font-size: 25px; font-family: Open Sans; transition: all .3s; color: white; position: absolute; top: 405px; left: 5%; margin-left: 860px; text-align: center; height: 0px; width: 150px; background-color: black;";
 
-										karla.innerText = "Karla";
+										username.innerText = "Karla";
 										pieter.innerText = "Pieter";
 
-										newBody.appendChild(karla);
+										newBody.appendChild(username);
 										newBody.appendChild(pieter);
 
 										setTimeout(function() {
-											karla.style.paddingTop = "25px";
+											username.style.paddingTop = "25px";
 											pieter.style.paddingTop = "25px";
-											karla.style.height = "60px";
+											username.style.height = "60px";
 											pieter.style.height = "60px";
 										},10);
 
 										setTimeout(function() {
-											karla.onclick = function() {
+											username.onclick = function() {
 												pieter.innerText = "";
 												pieter.style.height = "0";
 												pieter.style.paddingTop = "0";
 												
-												karla.innerText = "";
-												karla.style.height = "0";
-												karla.style.paddingTop = "0";
+												username.innerText = "";
+												username.style.height = "0";
+												username.style.paddingTop = "0";
 												
 												whoToContactText.innerText = "Karla";
 												isContactSelectOpen = false;
@@ -861,9 +866,9 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 												pieter.style.height = "0";
 												pieter.style.paddingTop = "0";
 												
-												karla.innerText = "";
-												karla.style.height = "0";
-												karla.style.paddingTop = "0";
+												username.innerText = "";
+												username.style.height = "0";
+												username.style.paddingTop = "0";
 
 												whoToContactText.innerText = "Pieter";
 												isContactSelectOpen = false;
@@ -887,8 +892,8 @@ fetch('config.txt').then(res => res.text()).then(function(response) {
 								sendButton.id = "sendButton";
 							
 								sendButton.onclick = function() {
-									if (whoToContactText.innerText == "Karla") {
-										window.location.assign("mailto:karla@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
+									if (whoToContactText.innerText == "Username") {
+										window.location.assign("mailto:username@gmail.com?subject="+messageHeaderBox.value+"&body="+messageBodyBox.value);
 									}
 									else if (whoToContactText.innerText == "Pieter")
 									{
